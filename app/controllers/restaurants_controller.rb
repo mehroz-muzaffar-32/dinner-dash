@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class RestaurantsController < ApplicationController
+  before_action :run_authorization, except: %i[index show]
+  after_action :verify_authorized, except: %i[index show]
+
   def index
     @restaurants = Restaurant.all
   end
@@ -54,6 +57,13 @@ class RestaurantsController < ApplicationController
   end
 
   private
+
+  def run_authorization
+    authorize Restaurant
+  rescue StandardError => e
+    e.backtrace
+    render plain: 'You are not authorized to this page/path'
+  end
 
   def restaurant_permitted_params
     params.require(:restaurant).permit(:name)
