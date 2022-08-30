@@ -9,7 +9,7 @@ class User < ApplicationRecord
   after_initialize :set_empty_display_name_to_null, if: :new_record?
 
   def set_empty_display_name_to_null
-    return unless display_name.strip.empty?
+    return unless display_name&.strip&.empty?
 
     self.display_name = nil
   end
