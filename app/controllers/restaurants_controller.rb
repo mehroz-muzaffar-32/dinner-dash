@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class RestaurantsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
   before_action :run_authorization, except: %i[index show]
+  before_action :load_current_restaurant, only: %i[show edit update destroy]
   after_action :verify_authorized, except: %i[index show]
 
   def index
@@ -12,12 +14,7 @@ class RestaurantsController < ApplicationController
     @restaurant = Restaurant.new
   end
 
-  def show
-    @restaurant = Restaurant.find(params[:id])
-  rescue StandardError => e
-    e.backtrace
-    render plain: "Couldn't Find the restaurant you are looking for"
-  end
+  def show; end
 
   def create
     @restaurant = Restaurant.new(restaurant_permitted_params)
@@ -28,32 +25,19 @@ class RestaurantsController < ApplicationController
     end
   end
 
-  def edit
-    @restaurant = Restaurant.find(params[:id])
-  rescue StandardError => e
-    e.backtrace
-    render plain: "Couldn't Find the restaurant you are looking for"
-  end
+  def edit; end
 
   def update
-    @restaurant = Restaurant.find(params[:id])
     if @restaurant.update(restaurant_permitted_params)
       redirect_to @restaurant
     else
       render 'edit'
     end
-  rescue StandardError => e
-    e.backtrace
-    render plain: "Couldn't Find the restaurant you are looking for"
   end
 
   def destroy
-    @restaurant = Restaurant.find(params[:id])
     @restaurant.destroy
     redirect_to restaurants_path
-  rescue StandardError => e
-    e.backtrace
-    render plain: "Couldn't Find the restaurant you are looking for"
   end
 
   private
@@ -62,7 +46,14 @@ class RestaurantsController < ApplicationController
     authorize Restaurant
   rescue StandardError => e
     e.backtrace
-    render plain: 'You are not authorized to this page/path'
+    render 'unauthorized'
+  end
+
+  def load_current_restaurant
+    @restaurant = Restaurant.find(params[:id])
+  rescue StandardError => e
+    e.backtrace
+    render plain: "Couldn't Find the restaurant you are looking for"
   end
 
   def restaurant_permitted_params
