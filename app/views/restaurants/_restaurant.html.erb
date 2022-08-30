@@ -1,0 +1,11 @@
+<p><strong>Name: </strong><%= restaurant.name %></p>
+<p>
+  <%= link_to 'Edit', edit_restaurant_path(restaurant), 'data-turbolinks-action': 'replace' %>
+  <% if enable_show %>
+    <%= link_to 'Show', restaurant_path(restaurant), 'data-turbolinks-action': 'replace' %>
+  <% end %>
+  <%= link_to 'Destroy', restaurant, method: :delete, 'data-turbolinks-action': 'replace' %>
+</p>
+<% unless enable_show %>
+  <%= link_to 'Back', restaurants_path, 'data-turbolinks-action': 'replace' %>
+<% end %>
