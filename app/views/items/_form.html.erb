@@ -1,0 +1,32 @@
+<%= form_for item, local: true do |form| %>
+  <% if item.errors.any?%>
+    <div id="error_explanation">
+      <strong><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved</strong>
+    </div>
+
+    <ul>
+    <% item.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  <% end %>
+  <p>
+    <%= form.label :title %>
+    <%= form.text_field :title%>
+  </p>
+  <p>
+    <%= form.label :description %>
+    <%= form.text_field :description%>
+  </p>
+  <p>
+    <%= form.label :price %>
+    <%= form.number_field :price, step: 'any', min: 0 %>
+  </p>
+  <p>
+    <%= form.label :restaurant %>
+    <%= form.collection_select :restaurant_id, Restaurant.order(:name), :id, :name %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

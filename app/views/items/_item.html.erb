@@ -1,0 +1,11 @@
+<p><strong>Title: </strong><%= item.title %></p>
+<p><strong>Description: </strong><%= item.description %></p>
+<p><strong>Price: </strong><%= item.price %></p>
+<p><strong>Restaurant: </strong><%= item.restaurant.name %></p>
+<p>
+  <%= link_to 'Edit', edit_item_path(item), 'data-turbolinks-action': 'replace' %>
+  <% if enable_show %>
+    <%= link_to 'Show', item_path(item), 'data-turbolinks-action': 'replace' %>
+  <% end %>
+  <%= link_to 'Destroy', item, method: :delete, 'data-turbolinks-action': 'replace' %>
+</p>
