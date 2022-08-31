@@ -44,16 +44,10 @@ class RestaurantsController < ApplicationController
 
   def run_authorization
     authorize Restaurant
-  rescue StandardError => e
-    e.backtrace
-    render 'unauthorized'
   end
 
   def load_current_restaurant
     @restaurant = Restaurant.find(params[:id])
-  rescue StandardError => e
-    e.backtrace
-    render plain: "Couldn't Find the restaurant you are looking for"
   end
 
   def restaurant_permitted_params

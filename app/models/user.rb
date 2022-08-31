@@ -6,6 +6,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :full_name, presence: true
+  validates :display_name, length: { in: 2..32 }, allow_blank: true
+
   enum role: { purchaser: 0, admin: 1 }
 
   after_initialize :set_empty_display_name_to_null, if: :new_record?

@@ -7,5 +7,8 @@
   <%= link_to 'Destroy', restaurant, method: :delete, 'data-turbolinks-action': 'replace' %>
 </p>
 <% unless enable_show %>
+  <strong>Items Available in this Restaurant</strong>
+  <%= render restaurant.items, enable_show: true %>
+  <%= link_to 'Add Item', new_restaurant_item_path(restaurant), 'data-turbolinks-action': 'replace' %>
   <%= link_to 'Back', restaurants_path, 'data-turbolinks-action': 'replace' %>
 <% end %>

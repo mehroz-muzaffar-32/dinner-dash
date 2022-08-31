@@ -42,9 +42,6 @@ class ItemsController < ApplicationController
 
   def load_current_item
     @item = Item.find(params[:id])
-  rescue StandardError => e
-    e.backtrace
-    render file: 'public/404'
   end
 
   def item_permitted_params
