@@ -2,7 +2,7 @@
 
 class RestaurantsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :run_authorization, except: %i[index show]
+  before_action :run_authorization, only: %i[new]
   before_action :load_current_restaurant, only: %i[show edit update destroy]
   after_action :verify_authorized, except: %i[index show]
 
@@ -48,6 +48,7 @@ class RestaurantsController < ApplicationController
 
   def load_current_restaurant
     @restaurant = Restaurant.find(params[:id])
+    authorize @restaurant
   end
 
   def restaurant_permitted_params
