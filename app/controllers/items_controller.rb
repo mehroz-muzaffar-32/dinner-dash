@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class ItemsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :run_authorization, only: %i[new]
   before_action :load_current_item, only: %i[show edit update destroy]
+  after_action :verify_authorized, except: %i[index show]
 
   def index
     @items = Item.all
@@ -42,6 +45,11 @@ class ItemsController < ApplicationController
 
   def load_current_item
     @item = Item.find(params[:id])
+    authorize @item
+  end
+
+  def run_authorization
+    authorize Item
   end
 
   def item_permitted_params
