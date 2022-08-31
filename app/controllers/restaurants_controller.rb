@@ -2,8 +2,9 @@
 
 class RestaurantsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :run_authorization, only: %i[new]
   before_action :load_current_restaurant, only: %i[show edit update destroy]
+  before_action :run_class_authorization, only: %i[new]
+  before_action :run_instance_authorization, only: %i[edit update destroy]
   after_action :verify_authorized, except: %i[index show]
 
   def index
@@ -42,12 +43,15 @@ class RestaurantsController < ApplicationController
 
   private
 
-  def run_authorization
+  def load_current_restaurant
+    @restaurant = Restaurant.find(params[:id])
+  end
+
+  def run_class_authorization
     authorize Restaurant
   end
 
-  def load_current_restaurant
-    @restaurant = Restaurant.find(params[:id])
+  def run_instance_authorization
     authorize @restaurant
   end
 
