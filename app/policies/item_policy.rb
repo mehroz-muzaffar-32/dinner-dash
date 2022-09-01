@@ -1,30 +1,12 @@
 # frozen_string_literal: true
 
-class ItemPolicy
+class ItemPolicy < ApplicationPolicy
   attr_reader :user, :item
 
   def initialize(user, item)
-    @user = user
+    super(user)
     @item = item
   end
 
-  def new?
-    @user&.admin?
-  end
-
-  def create?
-    @user&.admin?
-  end
-
-  def edit?
-    @user&.admin?
-  end
-
-  def update?
-    @user&.admin?
-  end
-
-  def destroy?
-    @user&.admin?
-  end
+  permit [:admin], to: %i[new create edit update destroy]
 end

@@ -18,7 +18,9 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <%= link_to 'Restaurants', restaurants_path, class: 'nav-item nav-link' %>
-          <%= link_to 'Items', items_path, class: 'nav-item nav-link' %>
+          <% if current_user.nil? || current_user.purchaser?%>
+            <%= link_to 'Popular Items', items_path, class: 'nav-item nav-link' %>
+          <% end %>
           <% if user_signed_in? %>
             <%= link_to 'Sign Out', destroy_user_session_path, class: 'nav-item nav-link', method: :delete %>
             <%= link_to 'Edit Profile', edit_user_registration_path, class: 'nav-item nav-link' %>
@@ -28,8 +30,8 @@
         </div>
       </div>
     </nav>
-    <%= yield %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <%= yield %>
   </body>
 </html>

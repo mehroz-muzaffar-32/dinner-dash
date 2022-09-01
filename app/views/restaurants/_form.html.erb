@@ -1,7 +1,7 @@
 <%= form_for restaurant, local: true do |form| %>
   <% if restaurant.errors.any?%>
-    <div id="error_explanation">
-      <strong><%= pluralize(restaurant.errors.count, "error") %> prohibited this restaurant from being saved</strong>
+    <div id='error_explanation'>
+      <strong><%= pluralize(restaurant.errors.count, 'error') %> prohibited this restaurant from being saved</strong>
     </div>
 
     <ul>
@@ -19,4 +19,4 @@
   </p>
 <% end %>
 
-<%= link_to 'Back', restaurants_path, 'data-turbolinks-action': 'replace' %>
+<%= link_to 'Back', restaurants_path %>

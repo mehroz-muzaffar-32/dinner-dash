@@ -1,7 +1,7 @@
-<%= form_for item, local: true do |form| %>
+<%= form_for [restaurant, item], local: true do |form| %>
   <% if item.errors.any?%>
-    <div id="error_explanation">
-      <strong><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved</strong>
+    <div id='error_explanation'>
+      <strong><%= pluralize(item.errors.count, 'error') %> prohibited this item from being saved</strong>
     </div>
 
     <ul>
@@ -21,10 +21,6 @@
   <p>
     <%= form.label :price %>
     <%= form.number_field :price, step: 'any', min: 0 %>
-  </p>
-  <p>
-    <%= form.label :restaurant %>
-    <%= form.collection_select :restaurant_id, Restaurant.order(:name), :id, :name %>
   </p>
   <p>
     <%= form.submit %>

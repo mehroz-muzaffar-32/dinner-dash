@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 2022_08_30_115704) do
     t.bigint "item_id"
     t.integer "quantity_ordered"
     t.decimal "sub_total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_order_line_items_on_item_id"
     t.index ["order_id"], name: "index_order_line_items_on_order_id"
   end
@@ -38,7 +40,7 @@ ActiveRecord::Schema.define(version: 2022_08_30_115704) do
   create_table "orders", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "restaurant_id"
-    t.integer "current_status", null: false
+    t.integer "status", null: false
     t.decimal "total_price", null: false
     t.datetime "submitted_at"
     t.datetime "created_at", null: false
