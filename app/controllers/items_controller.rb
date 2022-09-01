@@ -10,7 +10,6 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all
-    render :popular_items
   end
 
   def new
