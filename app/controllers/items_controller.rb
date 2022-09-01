@@ -2,7 +2,7 @@
 
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_item_restaurant, only: %i[new create]
+  before_action :set_restaurant, only: %i[new create]
   before_action :set_item, only: %i[show edit update destroy]
   before_action :authorize_class, only: %i[new]
   before_action :authorize_instance, only: %i[edit update destroy]
@@ -35,14 +35,13 @@ class ItemsController < ApplicationController
     if @item.update(item_params)
       redirect_to @item
     else
-      render 'edit'
+      render :edit
     end
   end
 
   def destroy
-    restaurant = @item.restaurant
     @item.destroy
-    redirect_to restaurant
+    redirect_to @item.restaurant
   end
 
   private
@@ -51,7 +50,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  def set_item_restaurant
+  def set_restaurant
     @restaurant = Restaurant.find(params[:restaurant_id])
   end
 

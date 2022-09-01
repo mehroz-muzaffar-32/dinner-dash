@@ -16,12 +16,12 @@ class ApplicationController < ActionController::Base
   end
 
   def record_not_found
-    msg = 'The resource you are looking for does not exist'
-    redirect_to root_path, notice: msg
+    flash[:alert] = I18n.t(:not_found)
+    redirect_to :root
   end
 
   def not_authorized_error
-    msg = 'You are not authorized to this page/path'
-    redirect_to root_path, notice: msg
+    flash[:alert] = I18n.t(:unauthorized)
+    redirect_to :root
   end
 end

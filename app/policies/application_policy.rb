@@ -9,7 +9,6 @@ class ApplicationPolicy
 
   def self.permit(roles, options)
     return unless roles.is_a? Array
-    return if absent?(options[:to])
 
     options[:to].each do |action|
       define_method("#{action}?") do
@@ -18,10 +17,6 @@ class ApplicationPolicy
         send(options[:when]) and permitted_role?(roles, @user.role)
       end
     end
-  end
-
-  def self.absent?(val)
-    val.nil? || val.none? || val.blank?
   end
 
   def permitted_role?(roles, role)

@@ -10,13 +10,13 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">Dinner Dash</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <nav class='navbar navbar-expand-lg navbar-dark bg-primary'>
+      <a class='navbar-brand' href='#'>Dinner Dash</a>
+      <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarNavAltMarkup' aria-controls='navbarNavAltMarkup' aria-expanded='false' aria-label='Toggle navigation'>
+        <span class='navbar-toggler-icon'></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
+      <div class='collapse navbar-collapse' id='navbarNavAltMarkup'>
+        <div class='navbar-nav'>
           <%= link_to 'Restaurants', restaurants_path, class: 'nav-item nav-link' %>
           <% if current_user.nil? || current_user.purchaser?%>
             <%= link_to 'Popular Items', items_path, class: 'nav-item nav-link' %>
@@ -30,8 +30,7 @@
         </div>
       </div>
     </nav>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <%= render 'layouts/flashes' %>
     <%= yield %>
   </body>
 </html>
