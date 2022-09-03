@@ -1,0 +1,6 @@
+<strong>Orders</strong>
+<% if @orders.any? %>
+  <%= render @orders, full_view: false %>
+<% else %>
+  <p>All your orders will appear here</p>
+<% end %>

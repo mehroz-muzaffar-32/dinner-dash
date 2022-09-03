@@ -18,10 +18,12 @@
       <div class='collapse navbar-collapse' id='navbarNavAltMarkup'>
         <div class='navbar-nav'>
           <%= link_to 'Restaurants', restaurants_path, class: 'nav-item nav-link' %>
-          <% if current_user.nil? || current_user.purchaser?%>
+          <% unless current_user&.admin?%>
             <%= link_to 'Popular Items', items_path, class: 'nav-item nav-link' %>
+            <%= link_to "View Cart (#{session[:cart_items]&.length.to_i})", :new_order, class: 'nav-item nav-link', id: 'view-cart' %>
           <% end %>
           <% if user_signed_in? %>
+            <%= link_to 'Orders', :orders, class: 'nav-item nav-link' %>
             <%= link_to 'Sign Out', destroy_user_session_path, class: 'nav-item nav-link', method: :delete %>
             <%= link_to 'Edit Profile', edit_user_registration_path, class: 'nav-item nav-link' %>
           <% else %>
@@ -30,7 +32,8 @@
         </div>
       </div>
     </nav>
-    <%= render 'layouts/flashes' %>
+    <%= render 'shared/flashes' %>
+    <div id="debug"></div>
     <%= yield %>
   </body>
 </html>

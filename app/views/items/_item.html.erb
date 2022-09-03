@@ -4,8 +4,13 @@
 <p><strong>Restaurant: </strong><%= item.restaurant.name %></p>
 <p>
   <%= link_to 'Edit', edit_item_path(item) %>
-  <% if enable_show %>
+  <% if defined?(enable_show) && enable_show %>
     <%= link_to 'Show', item_path(item) %>
+  <% end %>
+  <% if (!defined?(added_to_cart) || !added_to_cart) && (current_user.nil? || current_user.purchaser?) %>
+    <%= link_to 'Add to Cart', order_restaurant_add_line_item_path(item.restaurant, item), remote: true %>
+  <% elsif defined?(added_to_cart) && added_to_cart %>
+    <%= link_to 'Remove from Cart', order_restaurant_remove_line_item_path(item.restaurant, item), remote: true %>
   <% end %>
   <%= link_to 'Destroy', item, method: :delete %>
 </p>

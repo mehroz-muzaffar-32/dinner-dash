@@ -1,0 +1,24 @@
+<p><strong>Total Price: </strong><%= order.total_price %></p>
+<p><strong>Placed By: </strong><%= order.user.full_name %></p>
+<p><strong>Restaurant: </strong><%= order.restaurant.name %></p>
+<p><strong>Status: </strong><%= order.status %></p>
+<p><strong>Submitted at: </strong><%= order.submitted_at %></p>
+<% if order.ordered? %>
+  <p><%= status_link_to 'Mark as Paid', :paid, order %></p>
+  <p><%= status_link_to 'Cancel', :cancelled, order %></p>
+<% elsif order.paid? %>
+  <p><%= status_link_to 'Mark as Completed', :completed, order %></p>
+  <p><%= status_link_to 'Cancel', :cancelled, order %></p>
+<% elsif order.cancelled? %>
+  <p><strong>Cancelled at: </strong><%= order.updated_at %></p>
+<% elsif order.completed? %>
+  <p><strong>Completed at: </strong><%= order.updated_at %></p>
+<% end %>
+
+<% if full_view %>
+  <div id="order-line-items">
+    <%= render order.order_line_items %>
+  </div>
+<% else %>
+  <%= link_to 'View Order', order_path(order) %>
+<% end %>
