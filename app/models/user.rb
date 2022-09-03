@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   enum role: { purchaser: 0, admin: 1 }
 
+  has_many :orders, dependent: :destroy
+
   after_initialize :set_empty_display_name_to_null, if: :new_record?
 
   def set_empty_display_name_to_null

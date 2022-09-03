@@ -30,5 +30,18 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  not_found: 'The resource you are looking for does not exist'
-  unauthorized: 'You are not authorized to this page/path'
+  already_another_restaurant: 'You have already an item from another restaurant'
+  status_updated: 'Order Status Updated!'
+  status_not_updated: 'Order Status not Updated, error occured'
+  item_in_cart: 'Item already in cart'
+  added_to_cart: 'Item added to cart'
+  not_in_cart: 'Item not in cart'
+  already_empty: 'Cart is already empty'
+  order_placed: 'Your order has been placed successfulyy'
+  order_not_placed: 'Could not place order an error occured'
+  qunatity_zero: 'Item quantity zero, line item removed'
+  cart_updated: 'Cart Updated successfully'
+  line_item_not_updated: 'Could not update line item'
+  cart_not_updated: 'Could not update cart. An error occured'
+  cart_saved: 'Cart saved successfully'
+  cart_not_saved: 'Could not save cart, an error occured'
