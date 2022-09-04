@@ -1,4 +1,9 @@
 <p><strong>Title: </strong><%= item.title %></p>
+<% if item.photo.attached? %>
+  <%= image_tag url_for(item.photo), width: 200 %>
+<% else %>
+  <%= image_tag 'item_blank_photo.png', width: 200 %>
+<% end %>
 <p><strong>Description: </strong><%= item.description %></p>
 <p><strong>Price: </strong><%= item.price %></p>
 <p><strong>Restaurant: </strong><%= item.restaurant.name %></p>

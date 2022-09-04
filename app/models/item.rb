@@ -9,6 +9,7 @@ class Item < ApplicationRecord
   has_many :line_items, dependent: :nullify
   has_many :categories_items, dependent: :destroy
   has_many :categories, through: :categories_items
+  has_one_attached :photo
 
   validates :categories, presence: true
 
