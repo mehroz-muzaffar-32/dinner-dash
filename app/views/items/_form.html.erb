@@ -4,7 +4,7 @@
   <p>
     <%= image_tag 'item_blank_photo.png', id: :form_photo_thumbnail, width: 200 %>
   </p>
-  <%= form.file_field :photo, direct_upload: true, :accept => 'image/*' %>
+  <%= form.file_field :photo, :accept => 'image/*' %>
   <p>
     <%= form.label :title %>
     <%= form.text_field :title %>
