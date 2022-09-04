@@ -1,6 +1,10 @@
 <strong>Orders</strong>
+<ul><%= link_to 'all', :orders %></ul>
+<% @statuses.each do |status| %>
+  <ul><%= link_to status, by_status_orders_path(order_status: status) %></ul>
+<% end %>
 <% if @orders.any? %>
   <%= render @orders, full_view: false %>
 <% else %>
-  <p>All your orders will appear here</p>
+  <p>All orders will appear here</p>
 <% end %>

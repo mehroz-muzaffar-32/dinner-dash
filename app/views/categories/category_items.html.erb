@@ -1,0 +1,11 @@
+<strong><%= @category.name %></strong>
+<% if @items.empty? %>
+  <p>No items in this category</p>
+<% else %>
+  <%= render @items, enable_show: true, inside_category: true, category: @category %>
+<% end %>
+<strong>Add Item to this Category</strong>
+<%= form_tag category_add_item_path do %>
+  <%= collection_select :category, :item_ids, Item.order(:title), :id, :title %>
+  <%= submit_tag 'Add item' %>
+<% end %>

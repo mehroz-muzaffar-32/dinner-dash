@@ -6,9 +6,20 @@
   <%= link_to 'Edit', edit_item_path(item) %>
   <% if defined?(enable_show) && enable_show %>
     <%= link_to 'Show', item_path(item) %>
+  <% else %>
+    <strong>Categories: </strong>
+    <ul><%= render item.categories %></ul>
   <% end %>
   <% unless current_user&.admin? %>
     <%= link_to 'Add to Cart', add_to_cart_link(item), method: :post, remote: true %>
   <% end %>
+  <% if defined?(inside_category) && inside_category %>
+    <%= link_to 'Remove from Category', category_remove_item_path(category, item)%>
+  <% end %>
   <%= link_to 'Destroy', item, method: :delete %>
+  <% if item.not_retired? %>
+    <%= link_to 'Retire', item_update_status_path(item_id: item.id, status: :retired) %>
+  <% elsif item.retired? %>
+    <%= link_to 'Resume', item_update_status_path(item_id: item.id, status: :not_retired) %>
+  <% end %>
 </p>
