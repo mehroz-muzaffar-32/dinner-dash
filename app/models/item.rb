@@ -7,4 +7,10 @@ class Item < ApplicationRecord
 
   belongs_to :restaurant
   has_many :line_items, dependent: :nullify
+  has_many :categories_items, dependent: :destroy
+  has_many :categories, through: :categories_items
+
+  validates :categories, presence: true
+
+  enum status: { not_retired: 0, retired: 1 }
 end
