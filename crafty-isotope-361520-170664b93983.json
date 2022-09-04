@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "crafty-isotope-361520",
+  "private_key_id": "170664b93983df593ca9e81bd5190f87aba84a02",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCbRakp22xSWJPK\nakSt71MDQSiB0ExH4e574owDnau2qcuUwHkby/gmRxJxN0Wx7FqbxohaohHoMsGS\n6DWBzAT8t0n7kfIqQmuQpTso3inPluG1XXouoBHcXQzM7f/gPbIvKrtI8MC7uGWc\nKGBTEARTfCU3EvGhWNqyKsXkGL8iWXiCdPwKHsiahDBa+s7oVqJSP76KP1Qp7+h5\nncxtw4CI0cJE2m+RtVlUGW+Ags9eJcDx8gT/lq/cm6jZ1RHjBF4z9VaFNiUOAPNe\n8KAGPb/E+BKVTjJ8CWBKUwMVOjWRr3KyXxJplPWcMjcelSvIFfefsfUlnXaPuYNz\nJWwFuUNZAgMBAAECggEAAgaz+nS6Gm4nOeXuhkCy9L41OFIcErflKqxGGeHPzN20\n8e3xOU6CtcN+6ee38uZ5OA1BzYFN/5mSSteuo2ZYCNEJUpKg8OdRERrE4Dzw7vwX\n2daRz/ldA6MFC3NjdR0c/dj+XL6ZMeyUtTJWL8ihWSe2h8bT93WUlKyyoc4Rsscn\n+gUZlyVwURaqG7j47TY9SHiG5XUBbY14pgapftwRASZGcL4gY+6ShhxU9CZFoTDt\nD5kyRK5G186S3BSUHV8qZ9kwbwzDxdVPUob8wawioaZ+9b7gFSZ+VchIQJG4Vsbl\nIRwac6QT84ZOjMYJ2b5o0nHxK7oKFbcmAjBbOEXQYQKBgQDX23B5rNZ/MpyJ1vRS\nsvHCi5tnEluPMRyLx1d0hv8J9/0Vi4fh1/mFnJhzfzYvrXlAazfMDZwiAHfxazpr\nO23En9T3Vpo+qsBFcKxfiJnrSTa0DijZ28LYh8iwa43zPZBaZB8tBdEvfwJLuxxG\nOJLlZE70/O2t+W246j4OkmG/+QKBgQC4JeDd8HZ1edI2qGvRWozTSlJ2IXi20rbw\nb2Dqf3A5++yOyMscfomWkj3TPNz8P3GEv0anY7C79WJRBfo+sq4HGKTyIy/gxUmW\nkYPW7MDWblJXtTtGSJ7KbkC5aBZ6bmS+ud5KxMe5nFfFpbmkaBVHu6nCp+tFmTUJ\nVUUvr/k2YQKBgQC4gg8jQlTaxxU9UWroYaL7S0Abm3p97FndNRiRN287Qymmx+zv\nZCAaUF+TofJcUKjrInrARgXmnoXn62M1E8hhIMn2XaVc2bGd6ZC93FLM5nkG8W+D\nwTBMy8wE2PquJzqDuT9YybckJSl+OEMT1vnhcJt5F9XGNwXN4RQIeqFpaQKBgQCt\n4jaf27w/2bSCIC8PFO39ZiTPn3OZTwenqcReKdATMKuDeF8ynNnW8Gio2sPg/Rd4\nPhW9Ygk0stUPpRFTuu1RjhfS/R7so96E6wsPG6hL0wi2AU/jYhdvFwTPDlaLbUp8\nPo6FE6N0xQisfXz6nb3aan42bNFgevb1xSr7iLNOgQKBgHkvsa5jUZo+BYvBwhLB\nxqOLVjCXPlGvvqH51UYfumX3KjJ3Dn9rZDTDRUP85H4LmND/Hk5RM5oyBYpql2DC\nvINPCqBMljXw9QOYxP3jKdRobwm+tj0DfXzfoxHcNn43ZiIkmw4+cI+yO6ZCkj8S\nnhi7wZ9S3DMikZLMbgWEm3Hv\n-----END PRIVATE KEY-----\n",
+  "client_email": "dinner-dash@crafty-isotope-361520.iam.gserviceaccount.com",
+  "client_id": "102187584475483393068",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dinner-dash%40crafty-isotope-361520.iam.gserviceaccount.com"
+}
