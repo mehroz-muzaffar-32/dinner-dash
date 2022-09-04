@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_current_cart
 
-  rescue_from StandardError, with: :error_handler
+  # rescue_from StandardError, with: :error_handler
 
   protected
 

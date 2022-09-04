@@ -33,8 +33,8 @@ function preview_photo(input) {
 }
 
 $('document').ready(()=>{
-  $('a').attr('data-turbolinks-action', 'replace')
+  $('a').attr('data-turbolinks-action', 'replace');
   $('#item_photo').change(function(e){
-    preview_photo(e.target)
+    preview_photo(e.target);
   })
 })
