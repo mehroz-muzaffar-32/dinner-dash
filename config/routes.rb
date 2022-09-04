@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
   resources :items, only: [:index] do
     post 'add_to_cart', to: 'line_items#create'
+    get 'update_status/:status', action: 'update_status', as: :update_status
   end
   resources :restaurants do
     resources :items, shallow: true
@@ -22,6 +23,14 @@ Rails.application.routes.draw do
   resolve('Cart') { [:cart] }
   resources :orders, only: %i[index show update] do
     post 'checkout', action: 'checkout', as: 'checkout', on: :collection
+    collection do
+      get ':order_status', action: 'index', as: :by_status, constraints: { order_status: /[a-zA-Z]+/ }
+    end
+  end
+  resources :categories do
+    get 'items', action: 'category_items'
+    post 'add_item/', action: 'add_item', as: :add_item
+    get 'remove_item/:item_id', action: 'remove_item', as: :remove_item
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

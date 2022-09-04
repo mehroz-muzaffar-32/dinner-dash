@@ -22,11 +22,29 @@ ActiveRecord::Schema.define(version: 2022_09_07_123005) do
     t.index ["user_id"], name: "index_carts_on_user_id", unique: true
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "categories_items", force: :cascade do |t|
+    t.bigint "category_id"
+    t.bigint "item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id", "item_id"], name: "index_categories_items_on_category_id_and_item_id", unique: true
+    t.index ["category_id"], name: "index_categories_items_on_category_id"
+    t.index ["item_id"], name: "index_categories_items_on_item_id"
+  end
+
   create_table "items", force: :cascade do |t|
     t.bigint "restaurant_id", null: false
     t.string "title", null: false
     t.text "description", null: false
     t.decimal "price", null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["restaurant_id"], name: "index_items_on_restaurant_id"
@@ -78,6 +96,8 @@ ActiveRecord::Schema.define(version: 2022_09_07_123005) do
   end
 
   add_foreign_key "carts", "users"
+  add_foreign_key "categories_items", "categories"
+  add_foreign_key "categories_items", "items"
   add_foreign_key "items", "restaurants"
   add_foreign_key "line_items", "items"
   add_foreign_key "orders", "restaurants"

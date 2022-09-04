@@ -8,5 +8,5 @@ class ItemPolicy < ApplicationPolicy
     @item = item
   end
 
-  permit [:admin], to: %i[new create edit update destroy]
+  permit [:admin], to: %i[new create edit update destroy update_status]
 end
