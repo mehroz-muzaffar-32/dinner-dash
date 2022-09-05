@@ -1,6 +1,13 @@
-<p><strong>Total Price: </strong><%= cart.total_price %></p>
-<%= render cart.line_items %>
-<% if cart.line_items.any? %>
+<% if cart&.line_items&.any? %>
+  <p><strong>Total Price: </strong><%= cart.total_price %></p>
+  <p><strong>Restaurant: </strong><%= cart.restaurant.name %></p>
+  <div id="order-line-items">
+    <%= render cart.line_items.order(:created_at) %>
+  </div>
+<% else %>
+  <%= 'your cart is empty' %>
+<% end %>
+<% if cart&.line_items&.any? %>
   <%= link_to 'Empty Cart', cart, method: :delete %>
-  <%= link_to 'Checkout', :checkout_orders, method: :post %>
+  <%= link_to 'Check Out', :checkout_orders, method: :post, class: 'btn btn-warning' %>
 <% end %>
