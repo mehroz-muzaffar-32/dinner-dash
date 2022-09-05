@@ -1,0 +1,14 @@
+<p><strong>Name: </strong><%= restaurant.name %></p>
+<p>
+  <%= link_to 'Edit', edit_restaurant_path(restaurant) %>
+  <% if enable_show %>
+    <%= link_to 'Show', restaurant_path(restaurant) %>
+  <% end %>
+  <%= link_to 'Destroy', restaurant, method: :delete %>
+</p>
+<% unless enable_show %>
+  <strong>Items Available in this Restaurant</strong>
+  <%= render 'items/list', items: restaurant.items %>
+  <%= link_to 'Add Item', new_restaurant_item_path(restaurant) %>
+  <%= link_to 'Back', restaurants_path %>
+<% end %>

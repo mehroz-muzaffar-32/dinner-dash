@@ -1,0 +1,22 @@
+<%= form_for restaurant, local: true do |form| %>
+  <% if restaurant.errors.any?%>
+    <div id='error_explanation'>
+      <strong><%= pluralize(restaurant.errors.count, 'error') %> prohibited this restaurant from being saved</strong>
+    </div>
+
+    <ul>
+    <% restaurant.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  <% end %>
+  <p>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', restaurants_path %>
