@@ -22,6 +22,6 @@
     <%= form.collection_check_boxes :category_ids, Category.order(:name), :id, :name %>
   </p>
   <p>
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-dark' %>
   </p>
 <% end %>

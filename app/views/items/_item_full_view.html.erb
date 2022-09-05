@@ -1,0 +1,34 @@
+<div class="card">
+  <div class="card-body">
+    <p>
+      <strong>Categories: </strong>
+      <% item.categories.each do |category|%>
+        <%= render partial: 'categories/badge', locals: { category: category } %>
+      <% end %>
+    </p>
+    <p class="card-text"><strong>Description: </strong><%= item.description.humanize %></p>
+    <p class="card-text"><strong>Price: </strong><%= item.price %></p>
+    <p class="card-text"><strong>Restaurant: </strong><%= item.restaurant.name %></p>
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="btn-group">
+        <% if policy(item).edit? || policy(item).destroy? || policy(item).update_status? %>
+          <%= link_to 'Destroy', item, method: :delete, class: 'btn btn-sm btn-outline-danger' %>
+          <% if item.not_retired? %>
+            <%= link_to 'Retire', item_update_status_path(item_id: item.id, status: :retired), class: 'btn btn-sm btn-outline-dark' %>
+          <% elsif item.retired? %>
+            <%= link_to 'Resume', item_update_status_path(item_id: item.id, status: :not_retired), class: 'btn btn-sm btn-outline-dark' %>
+          <% end %>
+          <%= link_to 'Edit', edit_item_path(item), class: 'btn btn-sm btn-outline-secondary' %>
+        <% end %>
+      </div>
+    </div>
+    <strong>Photo:</strong>
+    <% if item.photo.attached?%>
+      <div class="full-view-item-image-container bd-placeholder-img card-img-top text-center bg-dark">
+        <%= image_tag url_for(item.photo) %>
+      </div>
+    <% else %>
+      <p>This item has no photo</p>
+    <% end %>
+  </div>
+</div>
