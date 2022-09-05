@@ -22,7 +22,7 @@
           <% unless current_user&.admin?%>
             <%= link_to 'Popular Items', items_path, class: 'nav-item nav-link' %>
             <%= link_to cart_path, class: 'nav-item nav-link' do %>
-              View Cart (<span id='cart-items-count'><%= user_signed_in? ? @current_cart.line_items.length : @current_cart[:cart_items].length %></span>)
+              View Cart (<span id='cart-items-count' class='badge badge-light'><%= user_signed_in? ? @current_cart.line_items.length : @current_cart[:cart_items].length %></span>)
             <% end %>
           <% end %>
           <% if user_signed_in? %>
@@ -35,8 +35,11 @@
         </div>
       </div>
     </nav>
-    <%= render 'shared/flashes' %>
-    <div id="debug"></div>
-    <%= yield %>
+    <div id='flash_messages'>
+      <%= render 'shared/flashes' %><br/>
+    </div>
+    <div class="container" id='main'>
+      <%= yield %>
+    </div>
   </body>
 </html>

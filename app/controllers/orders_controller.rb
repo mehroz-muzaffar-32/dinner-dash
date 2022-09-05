@@ -3,6 +3,8 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :initialize_order, only: [:checkout]
+  append_before_action :authorize_class, only: %i[index]
+  append_before_action :authorize_instance, except: %i[index]
 
   def index
     @orders = current_user.admin? ? Order.all : Order.of(current_user)
@@ -33,6 +35,15 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def authorize_class
+    authorize Order
+  end
+
+  def authorize_instance
+    authorize(@order || @cart, policy_class: OrderPolicy)
+  end
+
 
   def initialize_order
     @order = Order.new(user: current_user, restaurant: @current_cart.items.first.restaurant)
