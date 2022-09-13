@@ -44,7 +44,7 @@ items_data = [
 ]
 
 items_data.each do |item|
-  Item.find_or_create_by(item) do |item|
-    item.categories = categories
+  Item.find_or_create_by(item) do |new_item|
+    new_item.categories = categories
   end
 end
