@@ -4,8 +4,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
   before_action :configure_permitted_parameters, if: :devise_controller?
-  after_action :update_orders_table, only: %i[create], if: :devise_controller?
-  after_action :reset_session_cart, only: %i[destroy], if: :devise_controller?
+  before_action :set_current_cart
 
   rescue_from StandardError, with: :error_handler
 
@@ -21,39 +20,36 @@ class ApplicationController < ActionController::Base
     redirect_to :root
   end
 
-  def create_session_cart_from(order)
-    session[:cart] = order.as_json
-    session[:cart_items] = order.order_line_items.to_a
-  end
-
-  def save_session_cart
-    order = Order.new(session[:cart])
-    order.order_line_items.new(session[:cart_items])
-    order.user = current_user
-    if order.save
-      flash[:notice] = translate(:cart_saved)
+  def set_current_cart
+    if user_signed_in? && current_user.purchaser?
+      @current_cart = Cart.find_or_create_by(user: current_user)
+      old_cart_items = session_cart[:cart_items]
+      if old_cart_items.any? && @current_cart.line_items.empty?
+        @current_cart.line_items << old_cart_items.map do |key, value|
+          LineItem.new(item_id: key, quantity_ordered: value)
+        end
+      end
     else
-      flash[:alert] = translate(:cart_not_saved)
+      @current_cart = session_cart
     end
   end
 
-  def update_orders_table
-    return unless user_signed_in?
+  def session_cart
+    session[:cart] ||= { restaurant_id: nil, cart_items: {} }
+    session[:cart] = session[:cart].with_indifferent_access
+    session[:cart][:cart_items].transform_keys!(&:to_i)
+    session[:cart]
+  end
 
-    order = Order.not_placed.find_by(user: current_user)
-    if order
-      create_session_cart_from(order)
-    elsif session[:cart] && session[:cart_items]
-      save_session_cart
+  def hash_to_model
+    cart = Cart.new
+    cart.line_items << @current_cart[:cart_items].map do |key, value|
+      LineItem.new(item_id: key, quantity_ordered: value)
     end
+    cart
   end
 
-  def reset_session_cart
-    session[:cart] = nil
-    session[:cart_items] = nil
-  end
-
-  def translate(tag)
-    I18n.t(tag)
+  def set_flash(tag, message)
+    flash[tag] = message
   end
 end

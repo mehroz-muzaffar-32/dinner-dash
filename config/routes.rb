@@ -1,20 +1,27 @@
 Rails.application.routes.draw do
   root to: 'restaurants#index'
+  # root to: 'application#index'
   devise_for :users
+  resources :line_items do
+    post 'add', action: 'add_quantity', as: 'add'
+    post 'reduce', action: 'reduce_quantity', as: 'reduce'
+  end
+  resources :items, only: [:index] do
+    post 'add_to_cart', to: 'line_items#create'
+  end
   resources :restaurants do
     resources :items, shallow: true
-    scope :cart, controller: :orders, as: :order do
-      get 'add_item/:item_id', action: 'add_item', as: :add_item
-      get 'add_line_item/:item_id', action: 'add_line_item', as: :add_line_item
-      get 'remove_item/:item_id', action: 'remove_item', as: :remove_item
-      get 'remove_line_item/:item_id', action: 'remove_line_item', as: :remove_line_item
-    end
   end
-  resource :cart, controller: 'orders', as: 'order', only: %i[ new ]
-  get 'checkout/(:order_id)', to: 'orders#checkout', as: :order_checkout
-  resources :orders, only: %i[ index show ] do
-    get ':order_status', action: 'update_status', as: :update_status
+  scope '/:item_id', controller: :session_carts do
+    post 'add_to_cart', action: 'add_line_item', as: 'add_line_item'
+    post 'remove_from_cart', action: 'remove_line_item', as: 'remove_line_item'
+    post 'add_quantity', action: 'add_quantity', as: 'add_quantity'
+    post 'reduce_quantity', action: 'reduce_quantity', as: 'reduce_quantity'
   end
-  resources :items, only: [:index]
+  resource :cart
+  resolve('Cart') { [:cart] }
+  resources :orders, only: %i[index show update] do
+    post 'checkout', action: 'checkout', as: 'checkout', on: :collection
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

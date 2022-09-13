@@ -1,7 +1,0 @@
-<strong>Cart View</strong>
-<% content_for :cart_items_count do %>
-  <%= @cart&.order_line_items&.length %>
-<% end %>
-<div id="cart">
-  <%= render 'cart', cart: @cart %>
-</div>

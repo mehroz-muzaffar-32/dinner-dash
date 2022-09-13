@@ -3,9 +3,17 @@
 class Order < ApplicationRecord
   belongs_to :restaurant
   belongs_to :user
-  has_many :order_line_items, dependent: :destroy
+  has_many :line_items, as: :container, dependent: :destroy
 
-  accepts_nested_attributes_for :order_line_items
+  enum status: { ordered: 0, paid: 1, cancelled: 2, completed: 3 }
 
-  enum status: { not_placed: 0, ordered: 1, paid: 2, cancelled: 3, completed: 4 }
+  scope :of, ->(user) { where(user: user).order(:created_at) }
+
+  def total_price
+    sum = 0
+    line_items.each do |line_item|
+      sum += line_item.sub_total
+    end
+    sum
+  end
 end

@@ -7,10 +7,8 @@
   <% if defined?(enable_show) && enable_show %>
     <%= link_to 'Show', item_path(item) %>
   <% end %>
-  <% if (!defined?(added_to_cart) || !added_to_cart) && (current_user.nil? || current_user.purchaser?) %>
-    <%= link_to 'Add to Cart', order_restaurant_add_line_item_path(item.restaurant, item), remote: true %>
-  <% elsif defined?(added_to_cart) && added_to_cart %>
-    <%= link_to 'Remove from Cart', order_restaurant_remove_line_item_path(item.restaurant, item), remote: true %>
+  <% unless current_user&.admin? %>
+    <%= add_to_cart_link 'Add to Cart', item %>
   <% end %>
   <%= link_to 'Destroy', item, method: :delete %>
 </p>

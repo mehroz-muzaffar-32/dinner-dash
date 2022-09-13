@@ -20,7 +20,9 @@
           <%= link_to 'Restaurants', restaurants_path, class: 'nav-item nav-link' %>
           <% unless current_user&.admin?%>
             <%= link_to 'Popular Items', items_path, class: 'nav-item nav-link' %>
-            <%= link_to "View Cart (#{session[:cart_items]&.length.to_i})", :new_order, class: 'nav-item nav-link', id: 'view-cart' %>
+            <%= link_to cart_path, class: 'nav-item nav-link' do %>
+              View Cart (<span id='cart-items-count'><%= user_signed_in? ? @current_cart.line_items.length : @current_cart[:cart_items].length %></span>)
+            <% end %>
           <% end %>
           <% if user_signed_in? %>
             <%= link_to 'Orders', :orders, class: 'nav-item nav-link' %>
