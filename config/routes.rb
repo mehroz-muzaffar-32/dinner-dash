@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   end
   resource :cart
   resolve('Cart') { [:cart] }
+
   resources :orders, only: %i[index show update] do
     post 'checkout', action: 'checkout', as: 'checkout', on: :collection
     collection do

@@ -8,6 +8,9 @@ class OrdersController < ApplicationController
 
   def index
     @orders = current_user.admin? ? Order.all : Order.of(current_user)
+    @statuses = Order.statuses.keys
+    @current_status = params[:order_status] || 'all'
+    @orders.where(status: params[:order_status]) unless @current_status == 'all'
   end
 
   def show

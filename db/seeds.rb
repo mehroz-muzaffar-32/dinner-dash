@@ -17,43 +17,60 @@ Restaurant.create(
 )
 restaurants = Restaurant.all
 
+Category.create(
+  [
+    { name: 'Cousine' },
+    { name: 'Dinner' },
+    { name: 'Fast Food' },
+    { name: 'Lunch' }
+  ]
+)
+
+categories = Category.all
+
 Item.create!(
   [
     {
       restaurant: restaurants[0],
       title: 'Pulao Kabab',
       description: 'Tasty Pulao',
-      price: 250
+      price: 250,
+      categories: categories
     },
     {
       restaurant: restaurants[0],
       title: 'Chicken Burger',
       description: 'Tasty Burger',
-      price: 320
+      price: 320,
+      categories: categories
     },
     {
       restaurant: restaurants[1],
       title: 'Shawarma',
       description: 'Tasty Food',
-      price: 150
+      price: 150,
+      categories: categories
     },
     {
       restaurant: restaurants[2],
       title: 'Chicken Broast',
       description: 'Tasty',
-      price: 900
+      price: 900,
+      categories: categories
     },
     {
       restaurant: restaurants[2],
       title: 'Fish Broast',
       description: 'Tasty',
-      price: 1100
+      price: 1100,
+      categories: categories
     },
     {
       restaurant: restaurants[1],
       title: 'Fish Fry',
       description: 'Tasty',
-      price: 500
+      price: 500,
+      categories: categories
     }
   ]
 )
