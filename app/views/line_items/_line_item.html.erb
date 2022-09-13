@@ -2,9 +2,9 @@
   <div class="card-body">
     <div class="cart-item-image-container bd-placeholder-img card-img-top text-center bg-dark text-center">
       <% if line_item.item.photo.attached? %>
-        <%= image_tag url_for(line_item.item.photo) %>
+        <%= image_tag url_for(line_item.item.photo), class:'fit-image' %>
       <% else %>
-        <%= image_tag 'item_blank_photo.png' %>
+        <%= image_tag 'item_blank_photo.png', class:'fit-image' %>
       <% end %>
     </div>
     <%= link_to item_path(line_item.item), class: 'text-decoration-none text-dark' do %>

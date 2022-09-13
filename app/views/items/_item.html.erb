@@ -1,42 +1,40 @@
 <div class= 'col-md-4'>
-  <div class="card mb-4 shadow-sm">
-    <%= link_to item_path(item) do %>
-      <div class="item-image-container bd-placeholder-img card-img-top text-center bg-dark">
-        <% if item.photo.attached? %>
-          <%= image_tag url_for(item.photo) %>
-        <% else %>
-          <%= image_tag 'item_blank_photo.png' %>
-        <% end %>
-      </div>
-    <% end %>
+  <div class="card mb-4 shadow-sm bg-gray list-group-item-action">
+    <%= link_to '', item_path(item), class:'card-overlay-link' %>
+    <div class="item-image-container bd-placeholder-img card-img-top text-center bg-dark">
+      <% if item.photo.attached? %>
+        <%= image_tag url_for(item.photo), class:'fit-image' %>
+      <% else %>
+        <%= image_tag 'item_blank_photo.png', class:'fit-image' %>
+      <% end %>
+    </div>
     <div class="card-body">
       <div class="h2"><%= item.title.humanize %></div>
-      <% if !defined?(order) || (defined?(order) && (policy(order).add_line_item? || policy(order).add_line_item?)) %>
-        <% if (!defined?(added_to_cart) || !added_to_cart) && (current_user.nil? || current_user.purchaser?) %>
-          <% unless current_user&.admin? %>
-            <%= add_to_cart_link 'Add to Cart', item %>
-          <% end %>
-          <%= link_to add_to_cart_link(item), method: :post, remote: true, class: 'btn btn-sm btn-outline-success' do %>
-            <i class="bi bi-bag-plus-fill"></i> Add to Cart
-          <% end %>
-        <% end %>
-        <% if defined?(inside_category) && inside_category %>
-          <%= link_to 'Remove from Category', category_remove_item_path(category, item), class: 'btn btn-sm btn-outline-danger' %>
-        <% end %>
-      <% end %>
       <p class="card-text"><strong>Description: </strong><%= item.description.humanize %></p>
       <p><strong>Price: </strong><%= item.price %></p>
       <p><strong>Restaurant: </strong><%= item.restaurant.name.humanize %></p>
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="btn-group">
-          <% if policy(item).edit? || policy(item).destroy? || policy(item).update_status? %>
-            <%= link_to 'Destroy', item, method: :delete, class: 'btn btn-sm btn-outline-danger' %>
-            <% if item.not_retired? %>
-              <%= link_to 'Retire', item_update_status_path(item_id: item.id, status: :retired), class: 'btn btn-sm btn-outline-dark' %>
-            <% elsif item.retired? %>
-              <%= link_to 'Resume', item_update_status_path(item_id: item.id, status: :not_retired), class: 'btn btn-sm btn-outline-dark' %>
+      <div class="card-inner-links-container mb-3">
+        <% if !defined?(order) || (defined?(order) && (policy(order).add_line_item? || policy(order).add_line_item?)) %>
+          <% if (!defined?(added_to_cart) || !added_to_cart) && (current_user.nil? || current_user.purchaser?) %>
+            <%= link_to add_to_cart_link(item), method: :post, remote: true, class: 'btn btn-sm btn-outline-success card-inner-link' do %>
+              <i class="bi bi-bag-plus-fill"></i> Add to Cart
             <% end %>
-            <%= link_to 'Edit', edit_item_path(item), class: 'btn btn-sm btn-outline-secondary' %>
+          <% end %>
+          <% if defined?(inside_category) && inside_category && policy(category).remove_item? %>
+            <%= link_to 'Remove from Category', category_remove_item_path(category, item), class: 'btn btn-sm btn-outline-secondary card-inner-link' %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group card-inner-links-container">
+          <% if policy(item).edit? || policy(item).destroy? || policy(item).update_status? %>
+            <%= link_to 'Destroy', item, method: :delete, class: 'btn btn-sm btn-outline-danger card-inner-link' %>
+            <% if item.not_retired? %>
+              <%= link_to 'Retire', item_update_status_path(item_id: item.id, status: :retired), class: 'btn btn-sm btn-outline-info card-inner-link' %>
+            <% elsif item.retired? %>
+              <%= link_to 'Resume', item_update_status_path(item_id: item.id, status: :not_retired), class: 'btn btn-sm btn-outline-success card-inner-link' %>
+            <% end %>
+            <%= link_to 'Edit', edit_item_path(item), class: 'btn btn-sm btn-outline-dark' %>
           <% end %>
         </div>
       </div>

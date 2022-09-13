@@ -5,7 +5,7 @@
     <%= render cart.line_items.order(:created_at) %>
   </div>
 <% else %>
-  <%= 'your cart is empty' %>
+  <%= 'Your cart is empty. Try adding some items to it.' %>
 <% end %>
 <% if cart&.line_items&.any? %>
   <%= link_to 'Empty Cart', cart, method: :delete %>
