@@ -1,11 +1,11 @@
 <div id='<%= line_item.item_id%>'>
   <p>
     <strong id='#quantity'>Quantity: </strong>
-    <%= add_quantity_link 'Add Item', line_item %>
+    <%= link_to 'Add Item', add_quantity_link(line_item), method: :post, remote: true %>
     <%= line_item.quantity_ordered %>
-    <%= reduce_quantity_link 'Reduce Item', line_item %>
+    <%= link_to 'Reduce Item', reduce_quantity_link(line_item), method: :post, remote: true %>
   </p>
   <p><strong>Sub-Total: </strong><%= line_item.sub_total %></p>
   <%= render line_item.item, added_to_cart: true, enable_show: true, remote: true %>
-  <%= remove_from_cart_link 'Remove from Cart', line_item %>
+  <%= link_to 'Remove from Cart', remove_from_cart_link(line_item), method: :delete, remote: true %>
 </div>

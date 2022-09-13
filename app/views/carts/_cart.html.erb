@@ -1,5 +1,5 @@
 <p><strong>Total Price: </strong><%= cart.total_price %></p>
-<%= render cart.line_items.order(:created_at) %>
+<%= render cart.line_items %>
 <% if cart.line_items.any? %>
   <%= link_to 'Empty Cart', cart, method: :delete %>
   <%= link_to 'Checkout', :checkout_orders, method: :post %>

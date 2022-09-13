@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
   scope '/:item_id', controller: :session_carts do
     post 'add_to_cart', action: 'add_line_item', as: 'add_line_item'
-    post 'remove_from_cart', action: 'remove_line_item', as: 'remove_line_item'
+    delete 'remove_from_cart', action: 'remove_line_item', as: 'remove_line_item'
     post 'add_quantity', action: 'add_quantity', as: 'add_quantity'
     post 'reduce_quantity', action: 'reduce_quantity', as: 'reduce_quantity'
   end

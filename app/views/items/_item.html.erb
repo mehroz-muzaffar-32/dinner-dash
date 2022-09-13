@@ -8,7 +8,7 @@
     <%= link_to 'Show', item_path(item) %>
   <% end %>
   <% unless current_user&.admin? %>
-    <%= add_to_cart_link 'Add to Cart', item %>
+    <%= link_to 'Add to Cart', add_to_cart_link(item), method: :post, remote: true %>
   <% end %>
   <%= link_to 'Destroy', item, method: :delete %>
 </p>
