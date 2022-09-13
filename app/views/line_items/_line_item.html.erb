@@ -13,7 +13,7 @@
     <p class="card-text"><%= line_item.item.description.humanize %></p>
     <p>
       <strong id='#quantity'>Quantity: </strong>
-      <% if policy(line_item.order).add_item? && policy(line_item.order).remove_item? && (!defined?(read_only) || !read_only) %>
+      <% if !user_signed_in? || policy(line_item).add_quantity? && policy(line_item).reduce_quantity? && (!defined?(read_only) || !read_only) %>
         <%= link_to reduce_quantity_link(line_item), method: :post, remote: true, class: 'btn btn-outline-dark' do %>
           <i class="bi bi-dash-lg"></i>
         <% end %>

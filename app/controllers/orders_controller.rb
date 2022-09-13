@@ -3,22 +3,19 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :initialize_order, only: [:checkout]
+  before_action :set_order, only: %i[show update]
   append_before_action :authorize_class, only: %i[index]
   append_before_action :authorize_instance, except: %i[index]
 
   def index
-    @orders = current_user.admin? ? Order.all : Order.of(current_user)
-    @statuses = Order.statuses.keys
     @current_status = params[:order_status] || 'all'
-    @orders.where(status: params[:order_status]) unless @current_status == 'all'
+    @orders = (current_user.admin? ? Order.all : Order.of(current_user)).with(@current_status)
+    @statuses = Order.statuses.keys
   end
 
-  def show
-    @order = Order.find(params[:id])
-  end
+  def show; end
 
   def update
-    @order = Order.find(params[:id])
     if @order.update(status: params[:status])
       set_flash(:notice, 'Order status updated!')
     else
@@ -44,12 +41,15 @@ class OrdersController < ApplicationController
   end
 
   def authorize_instance
-    authorize(@order || @cart, policy_class: OrderPolicy)
+    authorize(@order)
   end
-
 
   def initialize_order
     @order = Order.new(user: current_user, restaurant: @current_cart.items.first.restaurant)
     @order.line_items << @current_cart.line_items
+  end
+
+  def set_order
+    @order = Order.find(params[:id])
   end
 end

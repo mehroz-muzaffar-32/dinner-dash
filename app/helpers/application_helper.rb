@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def status_link_to(display_text, status, order)
-    link_to display_text, [order, { status: status }], method: :patch
+  def update_status_link(status, order)
+    [order, { status: status }]
   end
 
   def add_quantity_link(line_item)

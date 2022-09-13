@@ -19,5 +19,6 @@ class CartsController < ApplicationController
 
   def set_cart
     @cart = user_signed_in? ? @current_cart : hash_to_model
+    authorize @cart
   end
 end

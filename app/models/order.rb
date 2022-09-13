@@ -8,6 +8,7 @@ class Order < ApplicationRecord
   enum status: { ordered: 0, paid: 1, cancelled: 2, completed: 3 }
 
   scope :of, ->(user) { where(user: user).order(:created_at) }
+  scope :with, ->(status) { status && status != 'all' ? where(status: status) : self }
 
   def total_price
     sum = 0

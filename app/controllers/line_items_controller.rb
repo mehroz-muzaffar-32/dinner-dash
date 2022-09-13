@@ -7,6 +7,7 @@ class LineItemsController < ApplicationController
   def create
     if cartable?
       line_item = @item.line_items.new(container: @current_cart)
+      authorize line_item
       line_item.save
       set_flash(:notice, 'Item added to cart')
     else
@@ -43,6 +44,7 @@ class LineItemsController < ApplicationController
 
   def set_line_item
     @line_item = LineItem.find(params[:id] || params[:line_item_id])
+    authorize @line_item
   end
 
   def cartable?

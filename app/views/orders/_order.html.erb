@@ -6,13 +6,16 @@
     <p><strong>Restaurant: </strong><%= order.restaurant.name %></p>
     <p><strong>Status: </strong><%= order.status %></p>
 <p><strong>Submitted at: </strong><%= order.created_at.localtime %></p>
-    <% if order.ordered? %>
-      <p><%= status_link_to 'Mark as Paid', :paid, order %></p>
-      <p><%= status_link_to 'Cancel', :cancelled, order %></p>
-    <% elsif order.paid? %>
-      <p><%= status_link_to 'Mark as Completed', :completed, order %></p>
-      <p><%= status_link_to 'Cancel', :cancelled, order %></p>
-    <% elsif order.cancelled? %>
+    <% if policy(order).update? %>
+      <% if order.ordered? %>
+        <p><%= link_to 'Mark as Paid', update_status_link(:paid, order), method: :patch, class: 'btn btn-outline-primary' %></p>
+        <p><%= link_to 'Cancel', update_status_link(:cancelled, order), method: :patch, class: 'btn btn-outline-danger' %></p>
+      <% elsif order.paid? %>
+        <p><%= link_to 'Mark as Completed', update_status_link(:completed, order), method: :patch, class: 'btn btn-outline-success' %></p>
+        <p><%= link_to 'Cancel', update_status_link(:cancelled, order), method: :patch, class: 'btn btn-outline-danger' %></p>
+      <% end %>
+    <% end %>
+    <% if order.cancelled? %>
   <p><strong>Cancelled at: </strong><%= order.updated_at.localtime %></p>
     <% elsif order.completed? %>
   <p><strong>Completed at: </strong><%= order.updated_at.localtime %></p>
