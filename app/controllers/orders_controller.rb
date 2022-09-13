@@ -4,8 +4,8 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :initialize_order, only: [:checkout]
   before_action :set_order, only: %i[show update]
-  append_before_action :authorize_class, only: %i[index]
-  append_before_action :authorize_instance, except: %i[index]
+  before_action :authorize_class, only: %i[index]
+  before_action :authorize_instance, except: %i[index]
 
   def index
     @current_status = params[:order_status] || :all

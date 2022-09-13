@@ -42,7 +42,7 @@ class CategoriesController < ApplicationController
     begin
       @category.items << @item
     rescue StandardError
-      set_flash(:alert, 'Category already taken!')
+      set_flash(:alert, 'Item already in this category!')
     end
     redirect_back fallback_location: :root
   end

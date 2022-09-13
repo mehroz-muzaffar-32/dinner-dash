@@ -18,6 +18,6 @@
   <p>No items in this category</p>
 <% else %>
   <div class='row'>
-    <%= render @items, enable_show: true, inside_category: true, category: @category %>
+    <%= render @items, category_flag: true, category: @category %>
   </div>
 <% end %>

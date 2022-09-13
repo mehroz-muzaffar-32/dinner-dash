@@ -21,7 +21,7 @@ module ApplicationHelper
     user_signed_in? ? item_add_to_cart_path(item) : add_line_item_path(item)
   end
 
-  def all_order_statuses
+  def order_statuses
     Order.statuses.keys
   end
 end

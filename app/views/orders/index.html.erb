@@ -7,7 +7,7 @@
   <h3 class='d-inline'>
     <%= link_to 'All', :orders, class: 'badge badge-dark px-3' %>
   </h3>
-  <% all_order_statuses.each do |status| %>
+  <% order_statuses.each do |status| %>
     <h3 class='d-inline p-1'>
       <%= link_to status.humanize,
                   by_status_orders_path(order_status: status),
