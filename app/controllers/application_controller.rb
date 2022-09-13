@@ -24,14 +24,17 @@ class ApplicationController < ActionController::Base
     if user_signed_in? && current_user.purchaser?
       @current_cart = Cart.find_or_create_by(user: current_user)
       old_cart_items = session_cart[:cart_items]
-      if old_cart_items.any? && @current_cart.line_items.empty?
-        @current_cart.line_items << old_cart_items.map do |key, value|
-          LineItem.new(item_id: key, quantity_ordered: value)
-        end
-      end
+      sync_cart(old_cart_items) if old_cart_items.any? && @current_cart.line_items.empty?
     else
       @current_cart = session_cart
     end
+  end
+
+  def sync_cart
+    @current_cart.line_items << old_cart_items.map do |key, value|
+      LineItem.new(item_id: key, quantity_ordered: value)
+    end
+    old_cart_items.clear
   end
 
   def session_cart

@@ -15,7 +15,7 @@
   height: $height;
 }
 
-.full-view-item-image-container {
+.full-image-container {
   @include image;
   @include image-container(100%, 40rem);
 }
@@ -23,7 +23,7 @@
   @include image;
   @include image-container(100%, 22rem);
 }
-.cart-item-image-container {
+.c-item-image-container {
   @include image;
   @include image-container(20%, 100%);
   float: right;

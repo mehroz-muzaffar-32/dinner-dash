@@ -22,7 +22,11 @@ class LineItemsController < ApplicationController
 
   def add_quantity
     @line_item.increment(:quantity_ordered)
-    @line_item.save
+    if @line_item.save
+      set_flash(:notice, 'Quantity Updated!')
+    else
+      set_flash(:alert, 'Quantity Not Updated')
+    end
     render :cart_update
   end
 
@@ -30,8 +34,10 @@ class LineItemsController < ApplicationController
     @line_item.decrement(:quantity_ordered)
     if @line_item.quantity_ordered.zero?
       @line_item.destroy
+    elsif @line_item.save
+      set_flash(:notice, 'Quantity Updated!')
     else
-      @line_item.save
+      set_flash(:alert, 'Quantity Not Updated')
     end
     render :cart_update
   end

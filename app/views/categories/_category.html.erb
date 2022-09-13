@@ -1,15 +1,19 @@
 <div class = 'list-group-item list-group-item-action'>
   <%= link_to '', category_items_path(category), class: 'card-overlay-link' %>
-  <div class="d-flex w-100 justify-content-between">
-    <h5 class="mb-1"><%= category.name%></h5>
+  <div class='d-flex w-100 justify-content-between'>
+    <h5 class='mb-1'><%= category.name%></h5>
     <small><%= time_ago_in_words(category.created_at)%> ago</small>
   </div>
-  <div class="card-inner-links-container">
-    <p class="mb-1 badge badge-primary"><%= pluralize(category.items.length, 'Item')%></p>
-    <div class="d-block">
+  <div class='card-inner-links-container'>
+    <p class='mb-1 badge badge-primary'><%= pluralize(category.items.length, 'Item')%></p>
+    <div class='d-block'>
       <% if policy(category).edit? && policy(category).destroy? %>
-        <%= link_to 'Edit', edit_category_path(category), class: 'btn btn-outline-dark card-inner-link' %>
-        <%= link_to 'Destroy', category, method: :delete, class: 'btn btn-outline-danger card-inner-link' %>
+        <%= link_to 'Edit',
+                    edit_category_path(category),
+                    class: 'btn btn-outline-dark card-inner-link' %>
+        <%= link_to 'Destroy',
+                    category, method: :delete,
+                    class: 'btn btn-outline-danger card-inner-link' %>
       <% end %>
     </div>
   </div>

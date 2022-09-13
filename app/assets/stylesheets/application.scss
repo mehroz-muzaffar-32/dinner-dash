@@ -18,11 +18,14 @@
 @import 'items';
 
 .card-overlay-link {
-  position:absolute;
-  left:0; top:0; bottom:0; right:0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
 }
 .card-inner-links-container {
-  position:relative;
+  position: relative;
   pointer-events: none;
   z-index: 1;
   .card-inner-link {

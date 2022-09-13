@@ -8,9 +8,8 @@ class OrdersController < ApplicationController
   append_before_action :authorize_instance, except: %i[index]
 
   def index
-    @current_status = params[:order_status] || 'all'
+    @current_status = params[:order_status] || :all
     @orders = (current_user.admin? ? Order.all : Order.of(current_user)).with(@current_status)
-    @statuses = Order.statuses.keys
   end
 
   def show; end
@@ -27,10 +26,10 @@ class OrdersController < ApplicationController
   def checkout
     if @order.save
       set_flash(:notice, 'Order placed successfully!')
+      @current_cart.delete
     else
       set_flash(:alert, 'Could not place the order!')
     end
-    @current_cart.delete
     redirect_to root_path
   end
 

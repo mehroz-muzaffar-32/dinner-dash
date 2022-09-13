@@ -16,8 +16,11 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-    @category.save
-    redirect_to :categories
+    if @category.save
+      redirect_to :categories
+    else
+      render :new
+    end
   end
 
   def edit; end
@@ -39,7 +42,7 @@ class CategoriesController < ApplicationController
     begin
       @category.items << @item
     rescue StandardError
-      flash[:alert] = translate(:category_taken)
+      set_flash(:alert, 'Category already taken!')
     end
     redirect_back fallback_location: :root
   end
