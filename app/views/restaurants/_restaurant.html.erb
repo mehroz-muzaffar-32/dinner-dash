@@ -16,7 +16,7 @@
     </div>
   </div>
 </div>
-<% unless full_view_flag %>
+<% if full_view_flag %>
   <h4>Items Available in this Restaurant</h4>
   <% if policy(Item).new? %>
     <%= link_to 'Add Item', new_restaurant_item_path(restaurant), class: 'btn btn-success' %>
