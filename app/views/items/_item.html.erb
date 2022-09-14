@@ -42,7 +42,9 @@
                           item_update_status_path(item_id: item.id, status: :not_retired),
                           class: 'btn btn-sm btn-outline-success card-inner-link' %>
             <% end %>
-            <%= link_to 'Edit', edit_item_path(item), class: 'btn btn-sm btn-outline-dark' %>
+            <%= link_to 'Edit',
+                        edit_item_path(item),
+                        class: 'btn btn-sm btn-outline-dark card-inner-link' %>
           <% end %>
         </div>
       </div>
