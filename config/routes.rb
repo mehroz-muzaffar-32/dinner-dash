@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root to: 'restaurants#index'
-  # root to: 'application#index'
+
   devise_for :users
   resources :line_items do
     post 'add', action: 'add_quantity', as: 'add'
