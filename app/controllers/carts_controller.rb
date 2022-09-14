@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CartsController < ApplicationController
-  before_action :set_cart, only: [:show]
+  before_action :set_cart, only: :show
 
   def show; end
 
@@ -18,7 +18,7 @@ class CartsController < ApplicationController
   private
 
   def set_cart
-    @cart = user_signed_in? ? @current_cart : hash_to_model
+    @cart = user_signed_in? ? @current_cart : session_line_items
     authorize @cart
   end
 end

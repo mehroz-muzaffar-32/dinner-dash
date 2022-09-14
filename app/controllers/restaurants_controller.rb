@@ -3,7 +3,7 @@
 class RestaurantsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_restaurant, only: %i[show edit update destroy]
-  before_action :authorize_class, only: %i[new]
+  before_action :authorize_class, only: :new
   before_action :authorize_instance, only: %i[edit update destroy]
   after_action :verify_authorized, except: %i[index show]
 

@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
 class LineItemsController < ApplicationController
-  before_action :set_item, only: %i[create]
+  before_action :set_item, only: :create
   before_action :set_line_item, only: %i[add_quantity reduce_quantity destroy]
 
   def create
     if cartable?
       line_item = @item.line_items.new(container: @current_cart)
       authorize line_item
-      line_item.save
-      set_flash(:notice, 'Item added to cart')
+      if line_item.save
+        set_flash(:notice, 'Item added to cart')
+      else
+        set_flash(:alert, 'Item not added to cart')
+      end
     else
       set_flash(:alert, 'Item not added to cart')
     end

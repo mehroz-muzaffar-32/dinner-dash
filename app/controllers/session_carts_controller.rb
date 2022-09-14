@@ -12,19 +12,19 @@ class SessionCartsController < ApplicationController
     else
       set_flash(:alert, 'Item not added to cart')
     end
-    @cart = hash_to_model
+    @cart = session_line_items
   end
 
   def remove_line_item
     @cart_items.delete(@item.id)
     @current_cart[:restaurant_id] = nil if @cart_items.empty?
-    @cart = hash_to_model
+    @cart = session_line_items
     render :session_cart_update
   end
 
   def add_quantity
     @cart_items[@item.id] += 1
-    @cart = hash_to_model
+    @cart = session_line_items
     render :session_cart_update
   end
 
@@ -32,7 +32,7 @@ class SessionCartsController < ApplicationController
     @cart_items[@item.id] -= 1
     @cart_items.delete(@item.id) if @cart_items[@item.id].zero?
     @current_cart[:restaurant_id] = nil if @cart_items.empty?
-    @cart = hash_to_model
+    @cart = session_line_items
     render :session_cart_update
   end
 

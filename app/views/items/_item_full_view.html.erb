@@ -18,11 +18,11 @@
           <% if item.not_retired? %>
             <%= link_to 'Retire',
                         item_update_status_path(item_id: item.id, status: :retired),
-                        class: 'btn btn-sm btn-outline-info' %>
+                        method: :post, class: 'btn btn-sm btn-outline-info' %>
           <% elsif item.retired? %>
             <%= link_to 'Resume',
                         item_update_status_path(item_id: item.id, status: :not_retired),
-                        class: 'btn btn-sm btn-outline-success' %>
+                        method: :post, class: 'btn btn-sm btn-outline-success' %>
           <% end %>
           <%= link_to 'Edit',
                       edit_item_path(item),

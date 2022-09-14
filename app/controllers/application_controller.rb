@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
     session[:cart]
   end
 
-  def hash_to_model
+  def session_line_items
     cart = Cart.new
     cart.line_items << @current_cart[:cart_items].map do |key, value|
       LineItem.new(item_id: key, quantity_ordered: value)
