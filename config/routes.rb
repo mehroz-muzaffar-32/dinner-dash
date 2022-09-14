@@ -23,8 +23,8 @@ Rails.application.routes.draw do
   resolve('Cart') { [:cart] }
 
   resources :orders, only: %i[index show update] do
-    post 'checkout', action: 'checkout', as: 'checkout', on: :collection
     collection do
+      post 'checkout', action: 'checkout', as: 'checkout'
       get ':order_status', action: 'index', as: :by_status, constraints: { order_status: /[a-zA-Z]+/ }
     end
   end

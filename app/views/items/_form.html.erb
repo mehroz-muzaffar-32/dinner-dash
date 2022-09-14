@@ -11,15 +11,15 @@
   <%= form.file_field :photo, accept: 'image/*' %>
   <p>
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, required: true %>
   </p>
   <p>
     <%= form.label :description %>
-    <%= form.text_field :description %>
+    <%= form.text_field :description, required: true %>
   </p>
   <p>
     <%= form.label :price %>
-    <%= form.number_field :price, step: :any, min: 0 %>
+    <%= form.number_field :price, step: :any, min: 0, required: true %>
   </p>
   <p>
     <%= form.label :categories %>
