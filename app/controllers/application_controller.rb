@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def error_handler(exception)
     flash[:alert] = exception
-    redirect_to :root
+    redirect_back fallback_location: :root
   end
 
   def set_current_cart
