@@ -3,5 +3,5 @@
 <% if user_signed_in? && current_user.admin? %>
   <%= link_to 'Add Restaurant', new_restaurant_path, class: 'btn btn-success' %>
 <% end %>
-<%= render @restaurants, enable_show: true %>
+<%= render @restaurants, full_view_flag: true %>
 
