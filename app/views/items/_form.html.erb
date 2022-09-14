@@ -2,7 +2,11 @@
 <%= form_for [restaurant, item], local: true do |form| %>
   <%= form.label :photo %>
   <p>
-    <%= image_tag 'item_blank_photo.png', id: :form_photo_thumbnail, width: 200 %>
+    <% if item.photo.attached? %>
+      <%= image_tag url_for(item.photo), id: :form_photo_thumbnail, width: 200 %>
+    <% else %>
+      <%= image_tag 'item_blank_photo.png', id: :form_photo_thumbnail, width: 200 %>
+    <% end %>
   </p>
   <%= form.file_field :photo, :accept => 'image/*' %>
   <p>
