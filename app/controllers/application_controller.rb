@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_current_cart
 
-  rescue_from StandardError, with: :error_handler
+  # rescue_from StandardError, with: :error_handler
 
   protected
 
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def sync_cart
+  def sync_cart(old_cart_items)
     @current_cart.line_items << old_cart_items.map do |key, value|
       LineItem.new(item_id: key, quantity_ordered: value)
     end
