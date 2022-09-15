@@ -1,0 +1,23 @@
+
+<h1><%= @category.name %></h1>
+<% if admin? %>
+  <strong>Add an Item to this Category</strong>
+  <%= form_tag category_add_item_path do %>
+    <div class='form-group'>
+      <%= collection_select :category,
+                            :item_ids,
+                            Item.order(:title),
+                            :id, :title,
+                            { include_blank: false },
+                            { class:'form-control' } %>
+    </div>
+    <%= submit_tag 'Add item', class: 'btn btn-primary' %>
+  <% end %>
+<% end %>
+<% if @items.empty? %>
+  <p>No items in this category</p>
+<% else %>
+  <div class='row'>
+    <%= render @items, category_flag: true, category: @category %>
+  </div>
+<% end %>

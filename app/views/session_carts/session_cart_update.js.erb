@@ -1,0 +1,3 @@
+$('#cart-items-count').html('<%= @cart.line_items.length %>');
+$('#cart').html('<%= j render @cart %>')
+<%= render 'shared/update_flashes' %>
