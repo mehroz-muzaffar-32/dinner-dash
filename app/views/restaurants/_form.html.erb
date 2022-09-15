@@ -1,12 +1,10 @@
-<%= render 'devise/shared/error_messages', resource: restaurant%>
+<%= render 'devise/shared/error_messages', resource: restaurant %>
 <%= form_for restaurant, local: true do |form| %>
   <p>
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, required: true %>
   </p>
   <p>
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-dark' %>
   </p>
 <% end %>
-
-<%= link_to 'Back', restaurants_path %>

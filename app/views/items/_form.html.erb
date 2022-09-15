@@ -1,22 +1,31 @@
-<%= render 'devise/shared/error_messages', resource: item%>
+<%= render 'devise/shared/error_messages', resource: item %>
 <%= form_for [restaurant, item], local: true do |form| %>
+  <%= form.label :photo %>
+  <p>
+    <% if item.photo.attached? %>
+      <%= image_tag url_for(item.photo), id: :form_photo_thumbnail, width: 200 %>
+    <% else %>
+      <%= image_tag 'item_blank_photo.png', id: :form_photo_thumbnail, width: 200 %>
+    <% end %>
+  </p>
+  <%= form.file_field :photo, accept: 'image/*' %>
   <p>
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, required: true %>
   </p>
   <p>
     <%= form.label :description %>
-    <%= form.text_field :description %>
+    <%= form.text_field :description, required: true %>
   </p>
   <p>
     <%= form.label :price %>
-    <%= form.number_field :price, step: :any, min: 0 %>
+    <%= form.number_field :price, step: :any, min: 0, required: true %>
   </p>
   <p>
     <%= form.label :categories %>
     <%= form.collection_check_boxes :category_ids, Category.order(:name), :id, :name %>
   </p>
   <p>
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-dark' %>
   </p>
 <% end %>

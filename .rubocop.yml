@@ -15,7 +15,6 @@ AllCops:
     - 'vendor/bundle/**/*'
     - 'bin/**/*'
     - 'config/**/*'
-    # - 'Gemfile'
 
 Layout/LineLength:
   Max: 120
@@ -25,7 +24,6 @@ Metrics/MethodLength:
 
 Metrics/BlockLength:
   Exclude:
-    # - config/**/*
     - spec/**/*
 
 Lint/AmbiguousBlockAssociation:

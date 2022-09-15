@@ -1,0 +1,30 @@
+@mixin image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .fit-image {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+@mixin image-container($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+.full-image-container {
+  @include image;
+  @include image-container(100%, 40rem);
+}
+.item-image-container {
+  @include image;
+  @include image-container(100%, 22rem);
+}
+.c-item-image-container {
+  @include image;
+  @include image-container(20%, 100%);
+  float: right;
+}
