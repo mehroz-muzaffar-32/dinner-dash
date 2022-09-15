@@ -2,16 +2,14 @@
   <div class='card-body'>
     <p>
       <strong>Categories: </strong>
-      <% item.categories.each do |category| %>
-        <%= render partial: 'categories/badge', locals: { category: category } %>
-      <% end %>
+      <%= render partial: 'categories/badge', collection: item.categories, as: :category %>
     </p>
     <p class='card-text'><strong>Description: </strong><%= item.description.humanize %></p>
     <p class='card-text'><strong>Price: </strong><%= item.price %></p>
     <p class='card-text'><strong>Restaurant: </strong><%= item.restaurant.name %></p>
     <div class='d-flex justify-content-between align-items-center'>
       <div class='btn-group'>
-        <% if policy(item).edit? || policy(item).destroy? || policy(item).update_status? %>
+        <% if can_modify_item?(item) %>
           <%= link_to 'Destroy', item,
                       method: :delete,
                       class: 'btn btn-sm btn-outline-danger' %>

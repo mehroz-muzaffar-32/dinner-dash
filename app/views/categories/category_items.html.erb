@@ -1,6 +1,6 @@
 
 <h1><%= @category.name %></h1>
-<% if user_signed_in? && current_user.admin? %>
+<% if admin? %>
   <strong>Add an Item to this Category</strong>
   <%= form_tag category_add_item_path do %>
     <div class='form-group'>

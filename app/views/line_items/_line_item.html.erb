@@ -14,9 +14,7 @@
     <p class='card-text'><%= line_item.item.description.humanize %></p>
     <p>
       <strong>Quantity: </strong>
-      <% if !user_signed_in? ||
-            policy(line_item).update_quantity? &&
-            !read_only %>
+      <% if can_update_quantity?(line_item) && !read_only %>
         <%= link_to reduce_quantity_link(line_item),
                     method: :post, remote: true,
                     class: 'btn btn-outline-dark' do %>

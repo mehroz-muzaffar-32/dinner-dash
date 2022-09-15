@@ -1,8 +1,6 @@
 <% if cart&.line_items&.any? %>
   <p><strong>Total Price: </strong><%= cart.total_price %></p>
-  <div id="order-line-items">
-    <%= render cart.line_items %>
-  </div>
+  <%= render cart.line_items %>
 <% else %>
   <%= 'Your cart is empty. Try adding some items to it.' %>
 <% end %>

@@ -15,14 +15,14 @@
       <p><strong>Price: </strong><%= item.price %></p>
       <p><strong>Restaurant: </strong><%= item.restaurant.name.humanize %></p>
       <div class='card-inner-links-container mb-3'>
-      <% unless current_user&.admin? %>
+      <% if can_add_item_to_cart?(item) %>
         <%= link_to add_to_cart_link(item),
                     method: :post, remote: true,
                     class: 'btn btn-sm btn-outline-success card-inner-link' do %>
           <i class='bi bi-bag-plus-fill'></i> Add to Cart
         <% end %>
       <% end %>
-      <% if category_flag && policy(item.categories).remove_item? %>
+      <% if category_flag && can_remove_from_category?(item) %>
         <%= link_to 'Remove from Category',
                     category_remove_item_path(category, item_id: item.id),
                     method: :post, class: 'btn btn-sm btn-outline-secondary card-inner-link' %>
@@ -30,7 +30,7 @@
       </div>
       <div class='d-flex justify-content-between align-items-center'>
         <div class='btn-group card-inner-links-container'>
-          <% if policy(item).edit? || policy(item).destroy? || policy(item).update_status? %>
+          <% if can_modify_item?(item) %>
             <%= link_to 'Destroy', item, method: :delete,
                         class: 'btn btn-sm btn-outline-danger card-inner-link' %>
             <% if item.not_retired? %>

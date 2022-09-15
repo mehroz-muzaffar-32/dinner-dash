@@ -58,6 +58,7 @@ class LineItemsController < ApplicationController
 
   def cartable?
     @current_cart.items.exclude?(@item) &&
-      @current_cart.items.all? { |cart_item| cart_item.restaurant == @item.restaurant }
+      @current_cart.items.all? { |cart_item| cart_item.restaurant == @item.restaurant } &&
+      @item.not_retired?
   end
 end

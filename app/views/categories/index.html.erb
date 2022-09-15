@@ -1,7 +1,7 @@
 <h2>Browse Items by Categories</h2>
-<% if policy(@categories).new? %>
+<% if can_add_category?(@categories) %>
   <%= link_to 'Add Category', new_category_path, class: 'btn btn-success mt-3' %>
 <% end %>
-<div class="list-group">
+<div class='list-group'>
   <%= render @categories %>
 </div>

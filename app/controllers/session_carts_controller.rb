@@ -48,6 +48,8 @@ class SessionCartsController < ApplicationController
 
   def cartable?
     @current_cart[:restaurant_id].nil? ||
-      (@cart_items.exclude?(@item.id) && @current_cart[:restaurant_id] == @item.restaurant_id)
+      (@cart_items.exclude?(@item.id) &&
+        @current_cart[:restaurant_id] == @item.restaurant_id &&
+        @item.not_retired?)
   end
 end

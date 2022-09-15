@@ -1,6 +1,6 @@
 <h2>Restaurants List</h2>
 
-<% if user_signed_in? && current_user.admin? %>
+<% if admin? %>
   <%= link_to 'Add Restaurant', new_restaurant_path, class: 'btn btn-success' %>
 <% end %>
 <%= render @restaurants, full_view_flag: false %>

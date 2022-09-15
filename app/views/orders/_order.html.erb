@@ -2,10 +2,10 @@
   <div class='card-body'>
     <h3 class='card-title'><%= order.restaurant.name %></h3>
     <p><strong>Total Price: </strong><%= order.total_price %></p>
-    <p><strong>Placed By: </strong><%= order.user.full_name %></p>
+    <p><strong>Placed By: </strong><%= order.user.full_name %> (<%= order.user.email %>)</p>
     <p><strong>Restaurant: </strong><%= order.restaurant.name %></p>
     <p><strong>Status: </strong><%= order.status %></p>
-<p><strong>Submitted at: </strong><%= order.created_at.localtime %></p>
+    <p><strong>Submitted at: </strong><%= order.created_at.localtime %></p>
     <% if policy(order).update? %>
       <% if order.ordered? %>
         <p><%= link_to 'Mark as Paid',
@@ -28,7 +28,7 @@
     <% elsif order.completed? %>
   <p><strong>Completed at: </strong><%= order.updated_at.localtime %></p>
     <% end %>
-    <% if full_view %>
+    <% if full_view_flag %>
       <h2><%= pluralize(order.line_items.length, 'Item') %> in this order</h2>
       <div id='order-line-items'>
         <%= render order.line_items, read_only: true %>

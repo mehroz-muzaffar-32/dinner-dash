@@ -7,16 +7,10 @@
   <h3 class='d-inline'>
     <%= link_to 'All', :orders, class: 'badge badge-dark px-3' %>
   </h3>
-  <% order_statuses.each do |status| %>
-    <h3 class='d-inline p-1'>
-      <%= link_to status.humanize,
-                  orders_path(order_status: status),
-                  class: 'badge badge-dark px-3' %>
-    </h3>
-  <% end %>
+  <%= render partial: 'orders/status', collection: order_statuses, as: :status %>
 </div>
 <% if @orders.any? %>
-  <%= render @orders, full_view: false %>
+  <%= render @orders, full_view_flag: false %>
 <% else %>
   <p>All orders will appear here</p>
 <% end %>
