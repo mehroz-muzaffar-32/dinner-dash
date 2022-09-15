@@ -1,24 +1,35 @@
-# README
+# Dinner Dash v2.0
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Deployment Link
+* dinner-dash-v2-test-project: http://dinner-dash-v2-test-project.herokuapp.com/
 
-Things you may want to cover:
+## Ruby version
 
-* Ruby version
+* ruby 2.7.2
 
-* System dependencies
+## Rails version
 
-* Configuration
+* rails 5.2
 
-* Database creation
+## System dependencies
 
-* Database initialization
+* bootstrap
+* devise
+* google-cloud-storage
+* jquery-rails
 
-* How to run the test suite
+## Configuration
+* bundle install
 
-* Services (job queues, cache servers, search engines, etc.)
+## Database creation
+* rake db:migrate
 
-* Deployment instructions
+## Database initialization
+* rake db:seed
 
-* ...
+## Deployment instructions
+* heroku create dinner-dash-v2-test-project
+* heroku stack:set heroku-22
+* git push heroku bootstrap-frontend:master
+* heroku run rake db:migrate
+* heroku run rake db:seed

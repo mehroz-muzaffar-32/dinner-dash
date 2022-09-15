@@ -17,21 +17,24 @@ class ApplicationController < ActionController::Base
 
   def error_handler(exception)
     flash[:alert] = exception
-    redirect_to :root
+    redirect_back fallback_location: :root
   end
 
   def set_current_cart
     if user_signed_in? && current_user.purchaser?
       @current_cart = Cart.find_or_create_by(user: current_user)
       old_cart_items = session_cart[:cart_items]
-      if old_cart_items.any? && @current_cart.line_items.empty?
-        @current_cart.line_items << old_cart_items.map do |key, value|
-          LineItem.new(item_id: key, quantity_ordered: value)
-        end
-      end
+      sync_cart(old_cart_items) if old_cart_items.any? && @current_cart.line_items.empty?
     else
       @current_cart = session_cart
     end
+  end
+
+  def sync_cart(old_cart_items)
+    @current_cart.line_items << old_cart_items.map do |key, value|
+      LineItem.new(item_id: key, quantity_ordered: value)
+    end
+    old_cart_items.clear
   end
 
   def session_cart
@@ -41,7 +44,7 @@ class ApplicationController < ActionController::Base
     session[:cart]
   end
 
-  def hash_to_model
+  def session_line_items
     cart = Cart.new
     cart.line_items << @current_cart[:cart_items].map do |key, value|
       LineItem.new(item_id: key, quantity_ordered: value)

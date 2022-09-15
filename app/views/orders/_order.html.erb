@@ -1,24 +1,40 @@
-<p><strong>Total Price: </strong><%= order.total_price %></p>
-<p><strong>Placed By: </strong><%= order.user.full_name %></p>
-<p><strong>Restaurant: </strong><%= order.restaurant.name %></p>
-<p><strong>Status: </strong><%= order.status %></p>
-<p><strong>Submitted at: </strong><%= order.created_at.localtime %></p>
-<% if order.ordered? %>
-  <p><%= status_link_to 'Mark as Paid', :paid, order %></p>
-  <p><%= status_link_to 'Cancel', :cancelled, order %></p>
-<% elsif order.paid? %>
-  <p><%= status_link_to 'Mark as Completed', :completed, order %></p>
-  <p><%= status_link_to 'Cancel', :cancelled, order %></p>
-<% elsif order.cancelled? %>
+<div class='card mb-2'>
+  <div class='card-body'>
+    <h3 class='card-title'><%= order.restaurant.name %></h3>
+    <p><strong>Total Price: </strong><%= order.total_price %></p>
+    <p><strong>Placed By: </strong><%= order.user.full_name %> (<%= order.user.email %>)</p>
+    <p><strong>Restaurant: </strong><%= order.restaurant.name %></p>
+    <p><strong>Status: </strong><%= order.status %></p>
+    <p><strong>Submitted at: </strong><%= order.created_at.localtime %></p>
+    <% if policy(order).update? %>
+      <% if order.ordered? %>
+        <p><%= link_to 'Mark as Paid',
+                        update_status_link(:paid, order),
+                        method: :patch, class: 'btn btn-outline-primary' %></p>
+        <p><%= link_to 'Cancel',
+                        update_status_link(:cancelled, order),
+                        method: :patch, class: 'btn btn-outline-danger' %></p>
+      <% elsif order.paid? %>
+        <p><%= link_to 'Mark as Completed',
+                        update_status_link(:completed, order),
+                        method: :patch, class: 'btn btn-outline-success' %></p>
+        <p><%= link_to 'Cancel',
+                        update_status_link(:cancelled, order),
+                        method: :patch, class: 'btn btn-outline-danger' %></p>
+      <% end %>
+    <% end %>
+    <% if order.cancelled? %>
   <p><strong>Cancelled at: </strong><%= order.updated_at.localtime %></p>
-<% elsif order.completed? %>
+    <% elsif order.completed? %>
   <p><strong>Completed at: </strong><%= order.updated_at.localtime %></p>
-<% end %>
-
-<% if full_view %>
-  <div id='line-items'>
-    <%= render order.line_items %>
+    <% end %>
+    <% if full_view_flag %>
+      <h2><%= pluralize(order.line_items.length, 'Item') %> in this order</h2>
+      <div id='order-line-items'>
+        <%= render order.line_items, read_only: true %>
+      </div>
+    <% else %>
+      <%= link_to 'View Order', order, class: 'btn btn-info' %>
+    <% end %>
   </div>
-<% else %>
-  <%= link_to 'View Order', order %>
-<% end %>
+</div>

@@ -1,10 +1,16 @@
-<strong>Orders</strong>
-<ul><%= link_to 'all', :orders %></ul>
-<% @statuses.each do |status| %>
-  <ul><%= link_to status, by_status_orders_path(order_status: status) %></ul>
+<% if @current_status == :all %>
+  <h2><%= @current_status.to_s.humanize %> Orders</h2>
+<% else %>
+  <h2>Orders with status '<%= @current_status.to_s.humanize %>'</h2>
 <% end %>
+<div class='mb-3'>
+  <h3 class='d-inline'>
+    <%= link_to 'All', :orders, class: 'badge badge-dark px-3' %>
+  </h3>
+  <%= render partial: 'orders/status', collection: order_statuses, as: :status %>
+</div>
 <% if @orders.any? %>
-  <%= render @orders, full_view: false %>
+  <%= render @orders, full_view_flag: false %>
 <% else %>
   <p>All orders will appear here</p>
 <% end %>
