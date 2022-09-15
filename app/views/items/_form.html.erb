@@ -1,28 +1,31 @@
+<%= render 'devise/shared/error_messages', resource: item %>
 <%= form_for [restaurant, item], local: true do |form| %>
-  <% if item.errors.any?%>
-    <div id='error_explanation'>
-      <strong><%= pluralize(item.errors.count, 'error') %> prohibited this item from being saved</strong>
-    </div>
-
-    <ul>
-    <% item.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
+  <%= form.label :photo %>
+  <p>
+    <% if item.photo.attached? %>
+      <%= image_tag url_for(item.photo), id: :form_photo_thumbnail, width: 200 %>
+    <% else %>
+      <%= image_tag 'item_blank_photo.png', id: :form_photo_thumbnail, width: 200 %>
     <% end %>
-    </ul>
-  <% end %>
+  </p>
+  <%= form.file_field :photo, accept: 'image/*' %>
   <p>
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, required: true %>
   </p>
   <p>
     <%= form.label :description %>
-    <%= form.text_field :description %>
+    <%= form.text_field :description, required: true %>
   </p>
   <p>
     <%= form.label :price %>
-    <%= form.number_field :price, step: :any, min: 0 %>
+    <%= form.number_field :price, step: :any, min: 0, required: true %>
   </p>
   <p>
-    <%= form.submit %>
+    <%= form.label :categories %>
+    <%= form.collection_check_boxes :category_ids, Category.order(:name), :id, :name %>
+  </p>
+  <p>
+    <%= form.submit class: 'btn btn-dark' %>
   </p>
 <% end %>

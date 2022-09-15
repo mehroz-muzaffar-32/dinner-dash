@@ -30,5 +30,4 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  not_found: 'The resource you are looking for does not exist'
-  unauthorized: 'You are not authorized to this page/path'
+  hello: "Hello World"

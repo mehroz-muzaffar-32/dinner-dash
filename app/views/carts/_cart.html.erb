@@ -1,0 +1,10 @@
+<% if cart&.line_items&.any? %>
+  <p><strong>Total Price: </strong><%= cart.total_price %></p>
+  <%= render cart.line_items %>
+<% else %>
+  <%= 'Your cart is empty. Try adding some items to it.' %>
+<% end %>
+<% if cart&.line_items&.any? %>
+  <%= link_to 'Empty Cart', cart, method: :delete, class: 'btn btn-danger' %>
+  <%= link_to 'Check Out', :checkout_orders, method: :post, class: 'btn btn-warning' %>
+<% end %>
