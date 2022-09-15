@@ -4,6 +4,10 @@
     <title>DinnerDash</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -18,10 +22,11 @@
       <div class='collapse navbar-collapse' id='navbarNavAltMarkup'>
         <div class='navbar-nav'>
           <%= link_to 'Restaurants', restaurants_path, class: 'nav-item nav-link' %>
+          <%= link_to 'Categories', categories_path, class: 'nav-item nav-link' %>
           <% unless current_user&.admin?%>
-            <%= link_to 'Popular Items', items_path, class: 'nav-item nav-link' %>
+            <%= link_to 'Items', items_path, class: 'nav-item nav-link' %>
             <%= link_to cart_path, class: 'nav-item nav-link' do %>
-              View Cart (<span id='cart-items-count'><%= user_signed_in? ? @current_cart.line_items.length : @current_cart[:cart_items].length %></span>)
+              View Cart <span id='cart-items-count' class='badge badge-light'><%= user_signed_in? ? @current_cart.line_items.length : @current_cart[:cart_items].length %></span>
             <% end %>
           <% end %>
           <% if user_signed_in? %>
@@ -34,8 +39,11 @@
         </div>
       </div>
     </nav>
-    <%= render 'shared/flashes' %>
-    <div id="debug"></div>
-    <%= yield %>
+    <div id='flash_messages'>
+      <%= render 'shared/flashes' %>
+    </div>
+    <div class='container' id='main'>
+      <%= yield %>
+    </div>
   </body>
 </html>

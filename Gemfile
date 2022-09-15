@@ -73,5 +73,6 @@ end
 
 gem 'bootstrap', '~> 4.6.1'
 gem 'devise'
+gem 'google-cloud-storage', '~> 1.8', require: false
 gem 'jquery-rails'
 gem 'pundit', '~> 2.2'

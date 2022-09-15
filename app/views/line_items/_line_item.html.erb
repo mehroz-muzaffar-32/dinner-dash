@@ -1,11 +1,43 @@
-<div id='<%= line_item.item_id%>'>
-  <p>
-    <strong id='#quantity'>Quantity: </strong>
-    <%= link_to 'Add Item', add_quantity_link(line_item), method: :post, remote: true %>
-    <%= line_item.quantity_ordered %>
-    <%= link_to 'Reduce Item', reduce_quantity_link(line_item), method: :post, remote: true %>
-  </p>
-  <p><strong>Sub-Total: </strong><%= line_item.sub_total %></p>
-  <%= render line_item.item, added_to_cart: true, enable_show: true, remote: true %>
-  <%= link_to 'Remove from Cart', remove_from_cart_link(line_item), method: :delete, remote: true %>
+<% read_only ||= false %>
+<div class='card'>
+  <div class='card-body'>
+    <div class='c-item-image-container bd-placeholder-img card-img-top text-center bg-dark text-center'>
+      <% if line_item.item.photo.attached? %>
+        <%= image_tag url_for(line_item.item.photo), class: 'fit-image' %>
+      <% else %>
+        <%= image_tag 'item_blank_photo.png', class: 'fit-image' %>
+      <% end %>
+    </div>
+    <%= link_to item_path(line_item.item), class: 'text-decoration-none text-dark' do %>
+      <h5 class='card-title'><%= line_item.item.title.humanize %></h5>
+    <% end %>
+    <p class='card-text'><%= line_item.item.description.humanize %></p>
+    <p>
+      <strong>Quantity: </strong>
+      <% if can_update_quantity?(line_item) && !read_only %>
+        <%= link_to reduce_quantity_link(line_item),
+                    method: :post, remote: true,
+                    class: 'btn btn-outline-dark' do %>
+          <i class='bi bi-dash-lg'></i>
+        <% end %>
+        <span class='mx-3'><%= line_item.quantity_ordered %></span>
+        <%= link_to add_quantity_link(line_item),
+                    method: :post, remote: true,
+                    class: 'btn btn-outline-dark' do %>
+          <i class='bi bi-plus-lg'></i>
+        <% end %>
+      <% else %>
+        <%= line_item.quantity_ordered %>
+      <% end %>
+    </p>
+    <p><strong>Per Unit Price: </strong><%= line_item.item.price %></p>
+    <p><strong>Sub-Total: </strong><%= line_item.sub_total %></p>
+    <% if !read_only %>
+      <%= link_to remove_from_cart_link(line_item),
+                  method: :delete, remote: true,
+                  class: 'btn btn-sm btn-outline-danger' do %>
+        <i class='bi bi-bag-dash-fill'></i> Remove from Cart
+      <% end %>
+    <% end %>
+  </div>
 </div>
