@@ -7,6 +7,7 @@ class CreateOrders < ActiveRecord::Migration[5.2]
       t.references :restaurant, foreign_key: true, null: false
       t.integer :status, default: 0, null: false
       t.datetime :submitted_at
+      t.decimal :total_price
 
       t.timestamps
     end

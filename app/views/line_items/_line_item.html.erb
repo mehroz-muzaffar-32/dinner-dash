@@ -15,14 +15,14 @@
     <p>
       <strong>Quantity: </strong>
       <% if can_update_quantity?(line_item) && !read_only %>
-        <%= link_to reduce_quantity_link(line_item),
-                    method: :post, remote: true,
+        <%= link_to update_quantity_link(line_item, line_item.quantity_ordered - 1),
+                    method: :patch, remote: true,
                     class: 'btn btn-outline-dark' do %>
           <i class='bi bi-dash-lg'></i>
         <% end %>
         <span class='mx-3'><%= line_item.quantity_ordered %></span>
-        <%= link_to add_quantity_link(line_item),
-                    method: :post, remote: true,
+        <%= link_to update_quantity_link(line_item, line_item.quantity_ordered + 1),
+                    method: :patch, remote: true,
                     class: 'btn btn-outline-dark' do %>
           <i class='bi bi-plus-lg'></i>
         <% end %>

@@ -9,7 +9,7 @@ class OrderPolicy < ApplicationPolicy
   end
 
   permit [:admin], to: %i[update]
-  permit [:purchaser], to: %i[checkout]
+  permit [:purchaser], to: %i[create]
   permit %i[purchaser admin], to: %i[index]
   permit %i[purchaser admin], to: %i[show], when: :authorized_user?
 

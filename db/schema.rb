@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2022_09_13_111634) do
     t.bigint "restaurant_id", null: false
     t.integer "status", default: 0, null: false
     t.datetime "submitted_at"
+    t.decimal "total_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["restaurant_id"], name: "index_orders_on_restaurant_id"

@@ -22,14 +22,8 @@ class SessionCartsController < ApplicationController
     render :session_cart_update
   end
 
-  def add_quantity
-    @cart_items[@item.id] += 1
-    @cart = session_line_items
-    render :session_cart_update
-  end
-
-  def reduce_quantity
-    @cart_items[@item.id] -= 1
+  def update_quantity
+    @cart_items[@item.id] = params[:quantity_ordered].to_i
     @cart_items.delete(@item.id) if @cart_items[@item.id].zero?
     @current_cart[:restaurant_id] = nil if @cart_items.empty?
     @cart = session_line_items

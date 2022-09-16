@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 module CartsHelper
-  def add_quantity_link(line_item)
-    user_signed_in? ? line_item_add_quantity_path(line_item) : add_quantity_path(line_item.item)
-  end
 
-  def reduce_quantity_link(line_item)
-    user_signed_in? ? line_item_reduce_quantity_path(line_item) : reduce_quantity_path(line_item.item)
+  def update_quantity_link(line_item, quantity_ordered)
+    if user_signed_in?
+      [line_item, { quantity_ordered: quantity_ordered }]
+    else
+      update_quantity_path(line_item.item, quantity_ordered: quantity_ordered)
+    end
   end
 
   def remove_from_cart_link(line_item)
@@ -18,6 +19,6 @@ module CartsHelper
   end
 
   def can_update_quantity?(line_item)
-    !user_signed_in? || policy(line_item).update_quantity?
+    !user_signed_in? || policy(line_item).update?
   end
 end

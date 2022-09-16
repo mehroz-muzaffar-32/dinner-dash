@@ -24,8 +24,8 @@
       <% end %>
       <% if category_flag && can_remove_from_category?(item) %>
         <%= link_to 'Remove from Category',
-                    category_remove_item_path(category, item_id: item.id),
-                    method: :post, class: 'btn btn-sm btn-outline-secondary card-inner-link' %>
+                    category.categories_items.find_by(item: item),
+                    method: :delete, class: 'btn btn-sm btn-outline-secondary card-inner-link' %>
       <% end %>
       </div>
       <div class='d-flex justify-content-between align-items-center'>
@@ -35,12 +35,12 @@
                         class: 'btn btn-sm btn-outline-danger card-inner-link' %>
             <% if item.not_retired? %>
               <%= link_to 'Retire',
-                          item_update_status_path(item_id: item.id, status: :retired),
-                          method: :post, class: 'btn btn-sm btn-outline-info card-inner-link' %>
+                          [item, {item: {status: :retired}}],
+                          method: :patch, class: 'btn btn-sm btn-outline-info card-inner-link' %>
             <% elsif item.retired? %>
               <%= link_to 'Resume',
-                          item_update_status_path(item_id: item.id, status: :not_retired),
-                          method: :post, class: 'btn btn-sm btn-outline-success card-inner-link' %>
+                          [item, {item: {status: :not_retired}}],
+                          method: :patch, class: 'btn btn-sm btn-outline-success card-inner-link' %>
             <% end %>
             <%= link_to 'Edit',
                         edit_item_path(item),

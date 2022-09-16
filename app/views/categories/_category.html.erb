@@ -1,5 +1,5 @@
 <div class = 'list-group-item list-group-item-action'>
-  <%= link_to '', category_items_path(category), class: 'card-overlay-link' %>
+  <%= link_to '', category_categories_items_path(category), class: 'card-overlay-link' %>
   <div class='d-flex w-100 justify-content-between'>
     <h5 class='mb-1'><%= category.name%></h5>
     <small><%= time_ago_in_words(category.created_at)%> ago</small>

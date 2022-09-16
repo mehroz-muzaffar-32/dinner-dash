@@ -2,7 +2,7 @@
 
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :initialize_order, only: :checkout
+  before_action :initialize_order, only: %i[create]
   before_action :set_order, only: %i[show update]
   before_action :authorize_class, only: :index
   before_action :authorize_instance, except: :index
@@ -23,7 +23,7 @@ class OrdersController < ApplicationController
     redirect_back fallback_location: :root
   end
 
-  def checkout
+  def create
     if @order.save
       set_flash(:notice, 'Order placed successfully!')
       @current_cart.delete

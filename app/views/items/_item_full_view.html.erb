@@ -15,12 +15,12 @@
                       class: 'btn btn-sm btn-outline-danger' %>
           <% if item.not_retired? %>
             <%= link_to 'Retire',
-                        item_update_status_path(item_id: item.id, status: :retired),
-                        method: :post, class: 'btn btn-sm btn-outline-info' %>
+                        [item, {item: {status: :retired}}],
+                        method: :patch, class: 'btn btn-sm btn-outline-info' %>
           <% elsif item.retired? %>
             <%= link_to 'Resume',
-                        item_update_status_path(item_id: item.id, status: :not_retired),
-                        method: :post, class: 'btn btn-sm btn-outline-success' %>
+                        [item, {item: {status: :not_retired}}],
+                        method: :patch, class: 'btn btn-sm btn-outline-success' %>
           <% end %>
           <%= link_to 'Edit',
                       edit_item_path(item),

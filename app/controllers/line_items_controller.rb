@@ -2,46 +2,25 @@
 
 class LineItemsController < ApplicationController
   before_action :set_item, only: :create
-  before_action :set_line_item, only: %i[add_quantity reduce_quantity destroy]
+  before_action :set_line_item, only: %i[destroy update]
 
   def create
     if cartable?
       line_item = @item.line_items.new(container: @current_cart)
       authorize line_item
-      if line_item.save
-        set_flash(:notice, 'Item added to cart')
-      else
-        set_flash(:alert, 'Item not added to cart')
-      end
+      line_item.save ? set_flash(:notice, 'Item added to cart') : set_flash(:alert, 'Item not added to cart')
     else
       set_flash(:alert, 'Item not added to cart')
     end
   end
 
+  def update
+    @line_item.update(quantity_ordered: params[:quantity_ordered])
+    render :cart_update
+  end
+
   def destroy
     @line_item.destroy
-    render :cart_update
-  end
-
-  def add_quantity
-    @line_item.increment(:quantity_ordered)
-    if @line_item.save
-      set_flash(:notice, 'Quantity Updated!')
-    else
-      set_flash(:alert, 'Quantity Not Updated')
-    end
-    render :cart_update
-  end
-
-  def reduce_quantity
-    @line_item.decrement(:quantity_ordered)
-    if @line_item.quantity_ordered.zero?
-      @line_item.destroy
-    elsif @line_item.save
-      set_flash(:notice, 'Quantity Updated!')
-    else
-      set_flash(:alert, 'Quantity Not Updated')
-    end
     render :cart_update
   end
 
@@ -57,8 +36,9 @@ class LineItemsController < ApplicationController
   end
 
   def cartable?
-    @current_cart.items.exclude?(@item) &&
-      @current_cart.items.all? { |cart_item| cart_item.restaurant == @item.restaurant } &&
+    cart_items = @current_cart.items
+    cart_items.exclude?(@item) &&
+      cart_items.all? { |cart_item| cart_item.restaurant == @item.restaurant } &&
       @item.not_retired?
   end
 end

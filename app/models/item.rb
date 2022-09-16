@@ -11,7 +11,11 @@ class Item < ApplicationRecord
   has_many :categories, through: :categories_items
   has_one_attached :photo, dependent: :destroy
 
+  accepts_nested_attributes_for :categories_items
+
   validates :categories, presence: true
 
   enum status: { not_retired: 0, retired: 1 }
+
+  scope :of, ->(category) { eager_load(:categories).where(categories: { id: category.id }) }
 end

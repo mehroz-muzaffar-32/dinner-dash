@@ -8,11 +8,7 @@ class LineItemPolicy < ApplicationPolicy
     @line_item = line_item
   end
 
-  permit [:purchaser], to: %i[create destroy add_quantity reduce_quantity], when: :added_by_user?
-
-  def update_quantity?
-    add_quantity? && reduce_quantity?
-  end
+  permit [:purchaser], to: %i[create destroy update], when: :added_by_user?
 
   def added_by_user?
     @line_item.container.user == @user
