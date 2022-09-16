@@ -7,6 +7,7 @@ class LineItemsController < ApplicationController
   def create
     if cartable?
       line_item = @item.line_items.new(container: @current_cart)
+      @current_cart.update(restaurant: @item.restaurant)
       authorize line_item
       line_item.save ? set_flash(:notice, 'Item added to cart') : set_flash(:alert, 'Item not added to cart')
     else
@@ -37,8 +38,7 @@ class LineItemsController < ApplicationController
 
   def cartable?
     cart_items = @current_cart.items
-    cart_items.exclude?(@item) &&
-      cart_items.all? { |cart_item| cart_item.restaurant == @item.restaurant } &&
-      @item.not_retired?
+    @current_cart.line_items.empty? ||
+      cart_items.exclude?(@item) && @current_cart.restaurant == @item.restaurant && @item.not_retired?
   end
 end

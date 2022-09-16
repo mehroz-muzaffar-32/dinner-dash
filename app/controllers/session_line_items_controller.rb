@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class SessionCartsController < ApplicationController
+class SessionLineItemsController < ApplicationController
   before_action :set_item
   before_action :set_cart_items
 
-  def add_line_item
+  def create
     if cartable?
       @cart_items[@item.id] = 1
       @current_cart[:restaurant_id] = @item.restaurant_id
@@ -15,19 +15,15 @@ class SessionCartsController < ApplicationController
     @cart = session_line_items
   end
 
-  def remove_line_item
-    @cart_items.delete(@item.id)
-    @current_cart[:restaurant_id] = nil if @cart_items.empty?
-    @cart = session_line_items
-    render :session_cart_update
-  end
-
-  def update_quantity
+  def update
     @cart_items[@item.id] = params[:quantity_ordered].to_i
     @cart_items.delete(@item.id) if @cart_items[@item.id].zero?
-    @current_cart[:restaurant_id] = nil if @cart_items.empty?
     @cart = session_line_items
-    render :session_cart_update
+  end
+
+  def destroy
+    @cart_items.delete(@item.id)
+    @cart = session_line_items
   end
 
   private
@@ -41,7 +37,7 @@ class SessionCartsController < ApplicationController
   end
 
   def cartable?
-    @current_cart[:restaurant_id].nil? ||
+    @cart_items.empty? ||
       (@cart_items.exclude?(@item.id) &&
         @current_cart[:restaurant_id] == @item.restaurant_id &&
         @item.not_retired?)

@@ -2,10 +2,9 @@
 
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :initialize_order, only: %i[create]
   before_action :set_order, only: %i[show update]
   before_action :authorize_class, only: :index
-  before_action :authorize_instance, except: :index
+  before_action :authorize_instance, except: %i[index create]
 
   def index
     @current_status = params[:order_status] || :all
@@ -24,6 +23,13 @@ class OrdersController < ApplicationController
   end
 
   def create
+    @order = Order.new(
+      user: current_user,
+      restaurant: @current_cart.items.first.restaurant,
+      line_items: @current_cart.line_items
+    )
+
+    authorize(@order)
     if @order.save
       set_flash(:notice, 'Order placed successfully!')
       @current_cart.delete
@@ -41,11 +47,6 @@ class OrdersController < ApplicationController
 
   def authorize_instance
     authorize(@order)
-  end
-
-  def initialize_order
-    @order = Order.new(user: current_user, restaurant: @current_cart.items.first.restaurant)
-    @order.line_items << @current_cart.line_items
   end
 
   def set_order

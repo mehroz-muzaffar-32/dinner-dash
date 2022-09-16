@@ -10,13 +10,9 @@ Rails.application.routes.draw do
   end
 
   resources :restaurants do
-    resources :items, shallow: true
-  end
-
-  scope '/:item_id', controller: :session_carts do
-    post :add_line_item
-    patch :update_quantity
-    delete :remove_line_item
+    resources :items, shallow: true, except: :index do
+      resource :session_line_item, only: %i[create update destroy]
+    end
   end
 
   resource :cart, only: %i[show destroy]

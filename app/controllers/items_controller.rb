@@ -8,12 +8,13 @@ class ItemsController < ApplicationController
   after_action :verify_authorized, except: %i[index show]
 
   def index
-    @items = Item.not_retired.all
+    @items = Item.not_retired
   end
 
   def new
     @item = @restaurant.items.new
     @item.categories.build
+
     authorize @item
   end
 

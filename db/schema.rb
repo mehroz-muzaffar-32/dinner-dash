@@ -38,8 +38,10 @@ ActiveRecord::Schema.define(version: 2022_09_13_111634) do
 
   create_table "carts", force: :cascade do |t|
     t.bigint "user_id", null: false
+    t.bigint "restaurant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_carts_on_restaurant_id"
     t.index ["user_id"], name: "index_carts_on_user_id", unique: true
   end
 
@@ -117,6 +119,7 @@ ActiveRecord::Schema.define(version: 2022_09_13_111634) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "carts", "restaurants"
   add_foreign_key "carts", "users"
   add_foreign_key "categories_items", "categories"
   add_foreign_key "categories_items", "items"
