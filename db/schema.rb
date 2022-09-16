@@ -37,14 +37,14 @@ ActiveRecord::Schema.define(version: 2022_09_13_111634) do
   end
 
   create_table "carts", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_carts_on_user_id", unique: true
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_categories_on_name", unique: true
@@ -62,9 +62,9 @@ ActiveRecord::Schema.define(version: 2022_09_13_111634) do
 
   create_table "items", force: :cascade do |t|
     t.bigint "restaurant_id", null: false
-    t.string "title", null: false
-    t.text "description", null: false
-    t.decimal "price", null: false
+    t.string "title", default: "", null: false
+    t.text "description", default: "", null: false
+    t.decimal "price", default: "0.0", null: false
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -87,7 +87,6 @@ ActiveRecord::Schema.define(version: 2022_09_13_111634) do
     t.bigint "user_id", null: false
     t.bigint "restaurant_id", null: false
     t.integer "status", default: 0, null: false
-    t.datetime "submitted_at"
     t.decimal "total_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -96,7 +95,7 @@ ActiveRecord::Schema.define(version: 2022_09_13_111634) do
   end
 
   create_table "restaurants", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_restaurants_on_name", unique: true
@@ -110,7 +109,7 @@ ActiveRecord::Schema.define(version: 2022_09_13_111634) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "full_name", null: false
+    t.string "full_name", default: "", null: false
     t.string "display_name"
     t.integer "role", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true

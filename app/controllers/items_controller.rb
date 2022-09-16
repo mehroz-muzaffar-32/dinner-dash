@@ -3,8 +3,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_restaurant, only: %i[new create]
-  before_action :set_item, only: %i[show edit update destroy update_status]
-  before_action :authorize_instance, only: %i[edit update destroy update_status]
+  before_action :set_item, only: %i[show edit update destroy]
+  before_action :authorize_instance, only: %i[edit update destroy]
   after_action :verify_authorized, except: %i[index show]
 
   def index
