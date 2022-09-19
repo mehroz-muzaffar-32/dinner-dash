@@ -68,16 +68,17 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # INFO: Gems Added for Test Project
 group :development, :test do
+  gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-minitest' # or gem 'rubocop-rspec' depending on your test suite
   gem 'rubocop-performance'
   gem 'rubocop-rails'
-  gem 'rspec-rails'
 end
 
 gem 'bootstrap', '~> 4.6.1'
 gem 'devise'
+gem 'faker'
 gem 'google-cloud-storage', '~> 1.8', require: false
 gem 'jquery-rails'
 gem 'pundit', '~> 2.2'
-gem 'faker'
+gem 'rubocop-rspec', require: false
