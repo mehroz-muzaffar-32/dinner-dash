@@ -6,6 +6,7 @@ class CategoriesItemsController < ApplicationController
 
   def index
     @categories_items = CategoriesItem.where(category: @category)
+    authorize(@categories_items)
   end
 
   def create
@@ -22,6 +23,7 @@ class CategoriesItemsController < ApplicationController
 
   def set_categories_item
     @categories_item = CategoriesItem.find(params[:id])
+    authorize(@categories_item)
   end
 
   def set_category

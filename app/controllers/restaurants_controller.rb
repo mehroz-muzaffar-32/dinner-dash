@@ -3,23 +3,23 @@
 class RestaurantsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_restaurant, only: %i[show edit update destroy]
-  before_action :authorize_class, only: :new
-  before_action :authorize_instance, only: %i[edit update destroy]
-  after_action :verify_authorized, except: %i[index show]
+  after_action :verify_authorized
 
   def index
     @restaurants = Restaurant.all
+    authorize(@restaurants)
   end
 
   def new
     @restaurant = Restaurant.new
+    authorize(@restaurant)
   end
 
   def show; end
 
   def create
     @restaurant = Restaurant.new(restaurant_params)
-    authorize @restaurant
+    authorize(@restaurant)
     if @restaurant.save
       redirect_to @restaurant
     else
@@ -46,14 +46,7 @@ class RestaurantsController < ApplicationController
 
   def set_restaurant
     @restaurant = Restaurant.find(params[:id])
-  end
-
-  def authorize_class
-    authorize Restaurant
-  end
-
-  def authorize_instance
-    authorize @restaurant
+    authorize(@restaurant)
   end
 
   def restaurant_params

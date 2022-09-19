@@ -7,6 +7,13 @@ class ApplicationPolicy
     @user = user
   end
 
+  crud_actions = %i[index new create show edit update destroy]
+  crud_actions.each do |action|
+    define_method("#{action}?") do
+      return true
+    end
+  end
+
   def self.define_policy_actions(roles, options, role_check_signal)
     options[:to].each do |action|
       define_method("#{action}?") do

@@ -19,6 +19,6 @@ class CartsController < ApplicationController
 
   def set_cart
     @cart = user_signed_in? ? @current_cart : session_line_items
-    authorize @cart
+    authorize(@cart)
   end
 end
