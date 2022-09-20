@@ -9,4 +9,15 @@ RSpec.describe Cart, type: :model do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:restaurant).optional(true) }
   end
+
+  describe 'with instance methods' do
+    subject(:cart) do
+      FactoryBot.rewind_sequences
+      FactoryBot.create(:cart_with_line_items)
+    end
+
+    it 'is expected to give correct total price' do
+      expect(cart.total_price).to eq(8260)
+    end
+  end
 end

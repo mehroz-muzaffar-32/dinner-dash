@@ -72,3 +72,5 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+Faker::Config.random = Random.new(42)
