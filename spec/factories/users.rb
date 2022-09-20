@@ -6,5 +6,9 @@ FactoryBot.define do
     display_name { Faker::Internet.username(specifier: 2..32) }
     email { Faker::Internet.unique.email }
     password { 'password' }
+
+    trait :admin do
+      role { :admin }
+    end
   end
 end
