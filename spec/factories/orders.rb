@@ -2,5 +2,7 @@
 
 FactoryBot.define do
   factory :order do
+    association :user
+    association :restaurant
   end
 end
