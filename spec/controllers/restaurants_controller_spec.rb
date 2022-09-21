@@ -32,9 +32,9 @@ RSpec.describe RestaurantsController, type: :controller do
   end
 
   describe 'GET /show[:id]' do
-    it 'shows restaurant with given id' do
+    it 'assigns @restaurant with given value' do
       get :show, params: { id: restaurant.id }
-      expect(response).to render_template(:show)
+      expect(assigns(:restaurant)).to eq(restaurant)
     end
 
     it 'does not show restaurant when id not given' do
