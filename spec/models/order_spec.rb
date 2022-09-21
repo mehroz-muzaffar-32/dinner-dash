@@ -24,4 +24,16 @@ RSpec.describe Order, type: :model do
       expect(order.total_price).to eq(8260)
     end
   end
+
+  describe 'with scopes' do
+    let(:order) { create(:order) }
+
+    it 'is expected to give orders of a user' do
+      expect(described_class.of(order.user)).to eq([order])
+    end
+
+    it 'is expected to give orders of a status' do
+      expect(described_class.with(order.status)).to eq([order])
+    end
+  end
 end

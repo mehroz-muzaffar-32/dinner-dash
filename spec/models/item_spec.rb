@@ -25,4 +25,12 @@ RSpec.describe Item, type: :model do
     it { is_expected.to have_many(:categories).through(:categories_items) }
     it { is_expected.to have_one_attached(:photo) }
   end
+
+  describe 'with scopes' do
+    let(:item) { create(:item, :restaurant) }
+
+    it 'is expected to give items of a category' do
+      expect(described_class.of(item.categories.first)).to eq([item])
+    end
+  end
 end
