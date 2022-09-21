@@ -17,5 +17,9 @@ FactoryBot.define do
     trait :restaurant do
       association :restaurant
     end
+
+    trait :retired do
+      status { :retired }
+    end
   end
 end

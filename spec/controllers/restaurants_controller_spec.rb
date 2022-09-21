@@ -60,26 +60,28 @@ RSpec.describe RestaurantsController, type: :controller do
   end
 
   describe 'POST /create' do
-    let!(:sender) { ->(restaurant_params) { post :create, params: { restaurant: restaurant_params } } }
+    let!(:create_restaurant) { ->(restaurant_params) { post :create, params: { restaurant: restaurant_params } } }
 
     context 'with valid parameters' do
-      it { expect { sender.call(attributes_for(:restaurant)) }.to change(Restaurant, :count).by(1) }
+      it { expect { create_restaurant.call(attributes_for(:restaurant)) }.to change(Restaurant, :count).by(1) }
     end
 
     context 'with invalid parameters' do
       it 'does not create restaurant with blank name' do
-        expect { sender.call(attributes_for(:restaurant, :blank_name)) }.to change(Restaurant, :count).by(0)
+        expect { create_restaurant.call(attributes_for(:restaurant, :blank_name)) }.to change(Restaurant, :count).by(0)
       end
 
       it 'does not create restaurant with same name' do
-        expect { sender.call(attributes_for(:restaurant, name: restaurant.name)) }.to change(Restaurant, :count).by(0)
+        expect do
+          create_restaurant.call(attributes_for(:restaurant, name: restaurant.name))
+        end.to change(Restaurant, :count).by(0)
       end
     end
 
     context 'with Purchaser' do
       let(:user) { FactoryBot.create(:user) }
 
-      before { sender.call(attributes_for(:restaurant)) }
+      before { create_restaurant.call(attributes_for(:restaurant)) }
 
       it { expect { response }.to change(Restaurant, :count).by(0) }
       it { expect(flash[:alert].message).to eq('not allowed to create? this Restaurant') }
@@ -91,7 +93,7 @@ RSpec.describe RestaurantsController, type: :controller do
     context 'with Admin' do
       before { get :edit, params: { id: restaurant.id } }
 
-      it { expect(assigns(:restaurant)).to be_a(Restaurant) }
+      it { expect(assigns(:restaurant)).to eq(restaurant) }
       it { expect(response).to be_successful }
       it { expect { get :edit }.to raise_error(ActionController::UrlGenerationError) }
     end
@@ -107,27 +109,32 @@ RSpec.describe RestaurantsController, type: :controller do
   end
 
   describe 'PUT /update[:id]' do
-    before { put :update, params: { id: restaurant.id, restaurant: attributes_for(:restaurant) } }
 
-    let!(:sender) do
+    let!(:update_restaurant) do
       ->(restaurant_params) { put :update, params: { id: restaurant.id, restaurant: restaurant_params } }
     end
 
     context 'with valid parameters' do
-      it { expect(response).to redirect_to(restaurant) }
+      it 'updates restaurant' do
+        with_valid_attributes = attributes_for(:restaurant)
+        update_restaurant.call(with_valid_attributes)
+        expect(restaurant.reload.name).to eq(with_valid_attributes[:name])
+      end
     end
 
     context 'with invalid parameters' do
       let!(:other_restaurant) { create(:restaurant) }
 
       it 'does not update restaurant name to blank' do
-        sender.call(attributes_for(:restaurant, :blank_name))
-        expect(response).to render_template(:edit)
+        with_blank_name = attributes_for(:restaurant, :blank_name)
+        update_restaurant.call(with_blank_name)
+        expect(restaurant.reload).to eq(restaurant)
       end
 
       it 'does not update restaurant name to already taken name' do
-        sender.call(attributes_for(:restaurant, name: other_restaurant.name))
-        expect(response).to render_template(:edit)
+        with_same_name = attributes_for(:restaurant, name: other_restaurant.name)
+        update_restaurant.call(with_same_name)
+        expect(restaurant.reload).to eq(restaurant)
       end
 
       it 'does not update restaurant when id not given' do
@@ -138,7 +145,7 @@ RSpec.describe RestaurantsController, type: :controller do
     context 'with Purchaser' do
       let(:user) { FactoryBot.create(:user) }
 
-      before { sender.call(attributes_for(:restaurant)) }
+      before { update_restaurant.call(attributes_for(:restaurant)) }
 
       it { expect(flash[:alert].message).to eq('not allowed to update? this Restaurant') }
       it { expect(response).to redirect_to(:root) }
@@ -146,14 +153,14 @@ RSpec.describe RestaurantsController, type: :controller do
   end
 
   describe 'DELETE /destroy[:id]' do
-    let!(:sender) { -> { delete :destroy, params: { id: restaurant.id } } }
+    let!(:destroy_restaurant) { -> { delete :destroy, params: { id: restaurant.id } } }
 
     context 'with Admin' do
-      it 'must destroy the restaurant with given id' do
-        expect { sender.call }.to change(Restaurant, :count).by(-1)
+      it 'destroys the restaurant with given id' do
+        expect { destroy_restaurant.call }.to change(Restaurant, :count).by(-1)
       end
 
-      it 'must not destroy the restaurant when id not given' do
+      it 'does not destroy the restaurant when id not given' do
         expect { delete :destroy }.to raise_error(ActionController::UrlGenerationError)
       end
     end
@@ -161,9 +168,9 @@ RSpec.describe RestaurantsController, type: :controller do
     context 'with Purchaser' do
       let(:user) { FactoryBot.create(:user) }
 
-      before { sender.call }
+      before { destroy_restaurant.call }
 
-      it 'must not destroy the restaurant with given id' do
+      it 'does not destroy the restaurant with given id' do
         expect { response }.to change(Restaurant, :count).by(0)
       end
 

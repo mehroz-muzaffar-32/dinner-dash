@@ -13,6 +13,17 @@ FactoryBot.define do
       end
     end
 
+    factory :cart_with_a_line_item do
+      after(:build) do |cart|
+        cart.restaurant = create(:restaurant)
+        cart.items = build_list(:item, 1, :price, restaurant: cart.restaurant)
+        quantities = [7].cycle
+        cart.line_items.each do |line_item|
+          line_item.quantity_ordered = quantities.next
+        end
+      end
+    end
+
     trait :restaurant do
       association :restaurant
     end
