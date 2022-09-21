@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
   describe 'with enums' do
-    it { is_expected.to define_enum_for(:status) }
+    it { is_expected.to define_enum_for(:status).with_values({ ordered: 0, paid: 1, cancelled: 2, completed: 3 }) }
   end
 
   describe 'with associations' do

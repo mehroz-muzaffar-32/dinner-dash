@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'with enums' do
-    it { is_expected.to define_enum_for(:role) }
+    it { is_expected.to define_enum_for(:role).with_values({ purchaser: 0, admin: 1 }) }
   end
 
   describe 'with associations' do
