@@ -109,7 +109,6 @@ RSpec.describe RestaurantsController, type: :controller do
   end
 
   describe 'PUT /update[:id]' do
-
     let!(:update_restaurant) do
       ->(restaurant_params) { put :update, params: { id: restaurant.id, restaurant: restaurant_params } }
     end
