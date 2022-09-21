@@ -16,8 +16,8 @@ RSpec.describe Order, type: :model do
   describe 'with callbacks' do
     subject(:order) do
       FactoryBot.rewind_sequences
-      cart = FactoryBot.create(:cart_with_line_items)
-      FactoryBot.create(:order, user: cart.user, restaurant: cart.restaurant, line_items: cart.line_items)
+      cart = create(:cart_with_line_items)
+      create(:order, user: cart.user, restaurant: cart.restaurant, line_items: cart.line_items)
     end
 
     it 'is expected to update total price of the order' do

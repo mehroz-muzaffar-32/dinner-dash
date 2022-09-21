@@ -15,7 +15,7 @@ RSpec.describe LineItem, type: :model do
 
   describe 'with instance methods' do
     subject(:line_item) do
-      FactoryBot.create(:line_item, :item)
+      create(:line_item, :item)
     end
 
     it 'is expected to give correct sub_total value' do

@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe RestaurantsController, type: :controller do
-  let(:user) { FactoryBot.create(:user, :admin) }
-  let!(:restaurant) { FactoryBot.create(:restaurant) }
+  let(:user) { create(:user, :admin) }
+  let!(:restaurant) { create(:restaurant) }
 
   before do
     sign_in user
@@ -18,7 +18,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
 
     describe '#purchaser?' do
-      let(:user) { FactoryBot.create(:user) }
+      let(:user) { create(:user) }
 
       it { is_expected.to permit_actions(%i[index show]) }
       it { is_expected.to forbid_actions(%i[create new update edit destroy]) }
@@ -50,7 +50,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
 
     context 'with Purchaser' do
-      let(:user) { FactoryBot.create(:user) }
+      let(:user) { create(:user) }
 
       before { get :new }
 
@@ -79,7 +79,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
 
     context 'with role Purchaser' do
-      let(:user) { FactoryBot.create(:user) }
+      let(:user) { create(:user) }
 
       before { create_restaurant.call(attributes_for(:restaurant)) }
 
@@ -102,7 +102,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
 
     context 'with role Purchaser' do
-      let(:user) { FactoryBot.create(:user) }
+      let(:user) { create(:user) }
 
       before { get :edit, params: { id: restaurant.id } }
 
@@ -145,7 +145,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
 
     context 'with role Purchaser' do
-      let(:user) { FactoryBot.create(:user) }
+      let(:user) { create(:user) }
 
       before { update_restaurant.call(attributes_for(:restaurant)) }
 
@@ -168,7 +168,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
 
     context 'with role Purchaser' do
-      let(:user) { FactoryBot.create(:user) }
+      let(:user) { create(:user) }
 
       before { destroy_restaurant.call }
 

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Item, type: :model do
   describe 'with validations' do
-    subject { FactoryBot.create(:item, :restaurant) }
+    subject { create(:item, :restaurant) }
 
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_uniqueness_of(:title) }

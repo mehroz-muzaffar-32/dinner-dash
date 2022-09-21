@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe LineItemsController, type: :controller do
   let!(:cart) do
     FactoryBot.rewind_sequences
-    FactoryBot.create(:cart_with_a_line_item)
+    create(:cart_with_a_line_item)
   end
 
   let(:user) { cart.user }
@@ -18,7 +18,7 @@ RSpec.describe LineItemsController, type: :controller do
     subject { described_class.new(user, cart.line_items.first) }
 
     describe '#admin?' do
-      let(:user) { FactoryBot.create(:user, :admin) }
+      let(:user) { create(:user, :admin) }
 
       it { is_expected.to forbid_actions(%i[create update destroy]) }
     end
@@ -32,7 +32,7 @@ RSpec.describe LineItemsController, type: :controller do
     let!(:add_to_cart) { ->(item) { post :create, xhr: true, params: { item_id: item.id } } }
 
     context 'with valid parameters' do
-      let!(:cartable_item) { FactoryBot.create(:item, restaurant: cart.restaurant) }
+      let!(:cartable_item) { create(:item, restaurant: cart.restaurant) }
 
       before { add_to_cart.call(cartable_item) }
 
@@ -45,13 +45,13 @@ RSpec.describe LineItemsController, type: :controller do
 
     context 'with invalid parameters' do
       it 'shows flash error message' do
-        uncartable_item = FactoryBot.create(:item, :restaurant, :retired)
+        uncartable_item = create(:item, :restaurant, :retired)
         add_to_cart.call(uncartable_item)
         expect(flash[:alert]).to eq('Item not added to cart')
       end
 
       it 'does not add item of other restaurant to cart' do
-        item_of_other_restaurant = FactoryBot.create(:item, :restaurant)
+        item_of_other_restaurant = create(:item, :restaurant)
         add_to_cart.call(item_of_other_restaurant)
         expect(assigns(:current_cart).items).not_to include(item_of_other_restaurant)
       end
@@ -62,7 +62,7 @@ RSpec.describe LineItemsController, type: :controller do
       end
 
       it 'does not add retired item to cart' do
-        retired_item = FactoryBot.create(:item, :retired, restaurant: cart.restaurant)
+        retired_item = create(:item, :retired, restaurant: cart.restaurant)
         add_to_cart.call(retired_item)
         expect(assigns(:current_cart).items).not_to include(retired_item)
       end
@@ -73,8 +73,8 @@ RSpec.describe LineItemsController, type: :controller do
     end
 
     context 'with role Admin' do
-      let(:user) { FactoryBot.create(:user, :admin) }
-      let!(:cartable_item) { FactoryBot.create(:item, restaurant: cart.restaurant) }
+      let(:user) { create(:user, :admin) }
+      let!(:cartable_item) { create(:item, restaurant: cart.restaurant) }
 
       before { add_to_cart.call(cartable_item) }
 
@@ -115,7 +115,7 @@ RSpec.describe LineItemsController, type: :controller do
     end
 
     context 'with role Admin' do
-      let(:user) { FactoryBot.create(:user, :admin) }
+      let(:user) { create(:user, :admin) }
       let!(:new_valid_quantity) { 5 }
 
       before { update_line_item.call(line_item, new_valid_quantity) }

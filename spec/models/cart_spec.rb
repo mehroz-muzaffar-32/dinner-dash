@@ -13,7 +13,7 @@ RSpec.describe Cart, type: :model do
   describe 'with instance methods' do
     subject(:cart) do
       FactoryBot.rewind_sequences
-      FactoryBot.create(:cart_with_line_items)
+      create(:cart_with_line_items)
     end
 
     it 'is expected to give correct total price' do
