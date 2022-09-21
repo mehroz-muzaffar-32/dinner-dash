@@ -36,7 +36,7 @@ RSpec.describe LineItemsController, type: :controller do
 
       before { add_to_cart.call(cartable_item) }
 
-      it 'adds to cart' do
+      it 'adds item to cart' do
         expect(assigns(:current_cart).items).to include(cartable_item)
       end
 
@@ -72,7 +72,7 @@ RSpec.describe LineItemsController, type: :controller do
       end
     end
 
-    context 'with Admin' do
+    context 'with role Admin' do
       let(:user) { FactoryBot.create(:user, :admin) }
       let!(:cartable_item) { FactoryBot.create(:item, restaurant: cart.restaurant) }
 
@@ -96,8 +96,8 @@ RSpec.describe LineItemsController, type: :controller do
 
       before { update_line_item.call(line_item, new_valid_quantity) }
 
-      it('assigns @line_item') { expect(assigns(:line_item)).to eq(line_item) }
-      it('updates quantity') { expect(line_item.reload.quantity_ordered).to eq(new_valid_quantity) }
+      it('assigns @line_item ith given value') { expect(assigns(:line_item)).to eq(line_item) }
+      it('updates quantity of line_item') { expect(line_item.reload.quantity_ordered).to eq(new_valid_quantity) }
     end
 
     context 'with invalid parameters' do
@@ -114,7 +114,7 @@ RSpec.describe LineItemsController, type: :controller do
       end
     end
 
-    context 'with Admin' do
+    context 'with role Admin' do
       let(:user) { FactoryBot.create(:user, :admin) }
       let!(:new_valid_quantity) { 5 }
 
@@ -134,7 +134,7 @@ RSpec.describe LineItemsController, type: :controller do
 
       before { destroy_line_item.call(line_item) }
 
-      it('assigns @line_item') { expect(assigns(:line_item)).to eq(line_item) }
+      it('assigns @line_item with given value') { expect(assigns(:line_item)).to eq(line_item) }
       it('destroys the line_item') { expect(assigns(:current_cart).line_items).not_to include(line_item) }
     end
 
@@ -143,8 +143,8 @@ RSpec.describe LineItemsController, type: :controller do
 
       before { destroy_line_item.call(line_item) }
 
-      it 'destroy the line_item in cart' do
-        expect(assigns(:current_cart).line_items).not_to include(line_item)
+      it 'does not destroy the line_item when id not given' do
+        expect { delete :destroy, xhr: true }.to raise_error(ActionController::UrlGenerationError)
       end
     end
   end

@@ -43,7 +43,7 @@ RSpec.describe RestaurantsController, type: :controller do
   end
 
   describe 'GET /new' do
-    context 'with Admin' do
+    context 'with role Admin' do
       before { get :new }
 
       it { expect(assigns(:restaurant)).to be_a_new(Restaurant) }
@@ -78,7 +78,7 @@ RSpec.describe RestaurantsController, type: :controller do
       end
     end
 
-    context 'with Purchaser' do
+    context 'with role Purchaser' do
       let(:user) { FactoryBot.create(:user) }
 
       before { create_restaurant.call(attributes_for(:restaurant)) }
@@ -90,15 +90,18 @@ RSpec.describe RestaurantsController, type: :controller do
   end
 
   describe 'GET /edit[:id]' do
-    context 'with Admin' do
+    context 'with role Admin' do
       before { get :edit, params: { id: restaurant.id } }
 
-      it { expect(assigns(:restaurant)).to eq(restaurant) }
+      it('assigns @restaurant with given value') { expect(assigns(:restaurant)).to eq(restaurant) }
       it { expect(response).to be_successful }
-      it { expect { get :edit }.to raise_error(ActionController::UrlGenerationError) }
+
+      it 'does not edit restaurant when id not given' do
+        expect { get :edit }.to raise_error(ActionController::UrlGenerationError)
+      end
     end
 
-    context 'with Purchaser' do
+    context 'with role Purchaser' do
       let(:user) { FactoryBot.create(:user) }
 
       before { get :edit, params: { id: restaurant.id } }
@@ -124,13 +127,13 @@ RSpec.describe RestaurantsController, type: :controller do
     context 'with invalid parameters' do
       let!(:other_restaurant) { create(:restaurant) }
 
-      it 'does not update restaurant name to blank' do
+      it 'does not update restaurant due to blank name' do
         with_blank_name = attributes_for(:restaurant, :blank_name)
         update_restaurant.call(with_blank_name)
         expect(restaurant.reload).to eq(restaurant)
       end
 
-      it 'does not update restaurant name to already taken name' do
+      it 'does not update restaurant due to already taken name' do
         with_same_name = attributes_for(:restaurant, name: other_restaurant.name)
         update_restaurant.call(with_same_name)
         expect(restaurant.reload).to eq(restaurant)
@@ -141,7 +144,7 @@ RSpec.describe RestaurantsController, type: :controller do
       end
     end
 
-    context 'with Purchaser' do
+    context 'with role Purchaser' do
       let(:user) { FactoryBot.create(:user) }
 
       before { update_restaurant.call(attributes_for(:restaurant)) }
@@ -154,7 +157,7 @@ RSpec.describe RestaurantsController, type: :controller do
   describe 'DELETE /destroy[:id]' do
     let!(:destroy_restaurant) { -> { delete :destroy, params: { id: restaurant.id } } }
 
-    context 'with Admin' do
+    context 'with role Admin' do
       it 'destroys the restaurant with given id' do
         expect { destroy_restaurant.call }.to change(Restaurant, :count).by(-1)
       end
@@ -164,7 +167,7 @@ RSpec.describe RestaurantsController, type: :controller do
       end
     end
 
-    context 'with Purchaser' do
+    context 'with role Purchaser' do
       let(:user) { FactoryBot.create(:user) }
 
       before { destroy_restaurant.call }
