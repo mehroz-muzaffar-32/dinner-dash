@@ -28,7 +28,7 @@ RSpec.describe LineItemsController, type: :controller do
     end
   end
 
-  describe 'POST /create' do
+  describe 'POST #create' do
     let!(:add_to_cart) { ->(item) { post :create, xhr: true, params: { item_id: item.id } } }
 
     context 'with valid parameters' do
@@ -72,7 +72,7 @@ RSpec.describe LineItemsController, type: :controller do
       end
     end
 
-    context 'with role Admin' do
+    context 'when current user is Admin' do
       let(:user) { create(:user, :admin) }
       let!(:cartable_item) { create(:item, restaurant: cart.restaurant) }
 
@@ -83,7 +83,7 @@ RSpec.describe LineItemsController, type: :controller do
     end
   end
 
-  describe 'PATCH /update[:id]' do
+  describe 'PATCH #update' do
     let!(:update_line_item) do
       lambda do |line_item, new_quantity|
         patch :update, xhr: true, params: { id: line_item.id, quantity_ordered: new_quantity }
@@ -114,7 +114,7 @@ RSpec.describe LineItemsController, type: :controller do
       end
     end
 
-    context 'with role Admin' do
+    context 'when current user is Admin' do
       let(:user) { create(:user, :admin) }
       let!(:new_valid_quantity) { 5 }
 
@@ -126,26 +126,32 @@ RSpec.describe LineItemsController, type: :controller do
     end
   end
 
-  describe 'DELETE /destroy[:id]' do
+  describe 'DELETE #destroy' do
     let!(:destroy_line_item) { ->(line_item) { delete :destroy, xhr: true, params: { id: line_item.id } } }
+    let!(:line_item) { cart.line_items.first }
 
-    context 'with valid parameters' do
-      let!(:line_item) { cart.line_items.first }
-
+    context 'when current user is Purchaser' do
       before { destroy_line_item.call(line_item) }
 
       it('assigns @line_item with given value') { expect(assigns(:line_item)).to eq(line_item) }
-      it('destroys the line_item') { expect(assigns(:current_cart).line_items).not_to include(line_item) }
+      it('destroys the line_item with given id') { expect(assigns(:current_cart).line_items).not_to include(line_item) }
+
+      it 'does not destroy line_item when id not given' do
+        expect { delete :destroy, xhr: true }.to raise_error(ActionController::UrlGenerationError)
+      end
     end
 
-    context 'with invalid parameters' do
-      let!(:line_item) { cart.line_items.first }
+    context 'when current user is Admin' do
+      let(:user) { create(:user, :admin) }
 
       before { destroy_line_item.call(line_item) }
 
-      it 'does not destroy the line_item when id not given' do
-        expect { delete :destroy, xhr: true }.to raise_error(ActionController::UrlGenerationError)
+      it('does not destroy line item with given id') do
+        expect { response }.to change(LineItem, :count).by(0)
       end
+
+      it { expect(flash[:alert].message).to eq('not allowed to destroy? this LineItem') }
+      it { expect(response).to redirect_to(:root) }
     end
   end
 end

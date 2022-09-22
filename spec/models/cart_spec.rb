@@ -16,8 +16,10 @@ RSpec.describe Cart, type: :model do
       create(:cart_with_line_items)
     end
 
-    it 'is expected to give correct total price' do
-      expect(cart.total_price).to eq(8260)
+    describe '#total_price' do
+      it 'is expected to give correct total price' do
+        expect(cart.total_price).to eq(8260)
+      end
     end
   end
 end

@@ -25,13 +25,13 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'GET /index' do
+  describe 'GET #index' do
     before { get :index }
 
     it { expect(assigns(:restaurants)).to be_a_all(Restaurant) }
   end
 
-  describe 'GET /show[:id]' do
+  describe 'GET #show' do
     it 'assigns @restaurant with given value' do
       get :show, params: { id: restaurant.id }
       expect(assigns(:restaurant)).to eq(restaurant)
@@ -42,14 +42,14 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'GET /new' do
-    context 'with role Admin' do
+  describe 'GET #new' do
+    context 'when current user is Admin' do
       before { get :new }
 
       it { expect(assigns(:restaurant)).to be_a_new(Restaurant) }
     end
 
-    context 'with Purchaser' do
+    context 'when current user is Purchaser' do
       let(:user) { create(:user) }
 
       before { get :new }
@@ -59,7 +59,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'POST /create' do
+  describe 'POST #create' do
     let!(:create_restaurant) { ->(restaurant_params) { post :create, params: { restaurant: restaurant_params } } }
 
     context 'with valid parameters' do
@@ -78,7 +78,7 @@ RSpec.describe RestaurantsController, type: :controller do
       end
     end
 
-    context 'with role Purchaser' do
+    context 'when current user is Purchaser' do
       let(:user) { create(:user) }
 
       before { create_restaurant.call(attributes_for(:restaurant)) }
@@ -89,8 +89,8 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'GET /edit[:id]' do
-    context 'with role Admin' do
+  describe 'GET #edit' do
+    context 'when current user is Admin' do
       before { get :edit, params: { id: restaurant.id } }
 
       it('assigns @restaurant with given value') { expect(assigns(:restaurant)).to eq(restaurant) }
@@ -101,7 +101,7 @@ RSpec.describe RestaurantsController, type: :controller do
       end
     end
 
-    context 'with role Purchaser' do
+    context 'when current user is Purchaser' do
       let(:user) { create(:user) }
 
       before { get :edit, params: { id: restaurant.id } }
@@ -111,7 +111,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'PUT /update[:id]' do
+  describe 'PUT #update' do
     let!(:update_restaurant) do
       ->(restaurant_params) { put :update, params: { id: restaurant.id, restaurant: restaurant_params } }
     end
@@ -144,7 +144,7 @@ RSpec.describe RestaurantsController, type: :controller do
       end
     end
 
-    context 'with role Purchaser' do
+    context 'when current user is Purchaser' do
       let(:user) { create(:user) }
 
       before { update_restaurant.call(attributes_for(:restaurant)) }
@@ -154,10 +154,10 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'DELETE /destroy[:id]' do
+  describe 'DELETE #destroy' do
     let!(:destroy_restaurant) { -> { delete :destroy, params: { id: restaurant.id } } }
 
-    context 'with role Admin' do
+    context 'when current user is Admin' do
       it 'destroys the restaurant with given id' do
         expect { destroy_restaurant.call }.to change(Restaurant, :count).by(-1)
       end
@@ -167,7 +167,7 @@ RSpec.describe RestaurantsController, type: :controller do
       end
     end
 
-    context 'with role Purchaser' do
+    context 'when current user is Purchaser' do
       let(:user) { create(:user) }
 
       before { destroy_restaurant.call }

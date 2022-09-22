@@ -20,20 +20,26 @@ RSpec.describe Order, type: :model do
       create(:order, user: cart.user, restaurant: cart.restaurant, line_items: cart.line_items)
     end
 
-    it 'is expected to update total price of the order' do
-      expect(order.total_price).to eq(8260)
+    describe '#update_total_price' do
+      it 'is expected to update total price of the order after create commit' do
+        expect(order.total_price).to eq(8260)
+      end
     end
   end
 
   describe 'with scopes' do
     let(:order) { create(:order) }
 
-    it 'is expected to give orders of a user' do
-      expect(described_class.of(order.user)).to eq([order])
+    describe '.of' do
+      it 'is expected to give orders of given user' do
+        expect(described_class.of(order.user)).to eq([order])
+      end
     end
 
-    it 'is expected to give orders of a status' do
-      expect(described_class.with(order.status)).to eq([order])
+    describe '.with' do
+      it 'is expected to give orders with given status' do
+        expect(described_class.with(order.status)).to eq([order])
+      end
     end
   end
 end

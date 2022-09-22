@@ -18,8 +18,10 @@ RSpec.describe LineItem, type: :model do
       create(:line_item, :item)
     end
 
-    it 'is expected to give correct sub_total value' do
-      expect(line_item.sub_total).to eq(2870)
+    describe '#sub_total' do
+      it 'is expected to give correct sub-total value' do
+        expect(line_item.sub_total).to eq(2870)
+      end
     end
   end
 end
