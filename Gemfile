@@ -56,6 +56,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
+  gem 'pundit-matchers', '~> 1.7.0'
   gem 'selenium-webdriver', '~> 2.35.1'
   gem 'shoulda-matchers', '~> 5.0'
   gem 'simplecov', require: false
@@ -81,4 +82,5 @@ gem 'faker'
 gem 'google-cloud-storage', '~> 1.8', require: false
 gem 'jquery-rails'
 gem 'pundit', '~> 2.2'
+gem 'rails-controller-testing'
 gem 'rubocop-rspec', require: false
