@@ -84,3 +84,4 @@ gem 'jquery-rails'
 gem 'pundit', '~> 2.2'
 gem 'rails-controller-testing'
 gem 'rubocop-rspec', require: false
+gem 'rack-cors'
