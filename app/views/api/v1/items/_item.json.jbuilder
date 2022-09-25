@@ -2,4 +2,5 @@
 
 json.extract! item, :id, :title, :description, :status, :created_at, :updated_at
 json.restaurant item.restaurant.name
-json.url api_v1_item_url(item, format: :json)
+json.photo item.photo.attached? ? url_for(item.photo) : url_for('item_blank_photo.png')
+json.url api_v1_item_path(item, format: :json)
