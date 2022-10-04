@@ -1,0 +1,6 @@
+production:
+  cloud_name: dbethgbn2
+  api_key: '329977623828294'
+  api_secret: "y4_mm27TWUpfP8Q_zohfTtXBZ0o"
+  enhance_image_tag: true
+  static_file_support: true

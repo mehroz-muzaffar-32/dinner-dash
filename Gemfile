@@ -77,11 +77,12 @@ group :development, :test do
 end
 
 gem 'bootstrap', '~> 4.6.1'
+gem 'cloudinary'
 gem 'devise'
 gem 'faker'
 gem 'google-cloud-storage', '~> 1.8', require: false
 gem 'jquery-rails'
 gem 'pundit', '~> 2.2'
+gem 'rack-cors'
 gem 'rails-controller-testing'
 gem 'rubocop-rspec', require: false
-gem 'rack-cors'
