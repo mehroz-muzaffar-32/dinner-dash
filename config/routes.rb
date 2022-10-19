@@ -23,5 +23,14 @@ Rails.application.routes.draw do
   resources :categories do
     resources :categories_items, shallow: true
   end
+
+  # Routes for JSON API
+  namespace :api do
+    namespace :v1 do
+      resources :items, only: %i[index show]
+      resources :orders, only: :index
+      resources :restaurants, only: :index
+    end
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

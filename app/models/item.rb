@@ -7,7 +7,7 @@ class Item < ApplicationRecord
   has_many :categories_items, dependent: :destroy
   has_many :categories, through: :categories_items
 
-  has_one_attached :photo, dependent: :destroy
+  has_one_attached :photo
 
   validates :title, presence: true, uniqueness: true
   validates :description, presence: true

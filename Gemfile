@@ -41,6 +41,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -55,7 +56,10 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
+  gem 'pundit-matchers', '~> 1.7.0'
+  gem 'selenium-webdriver', '~> 2.35.1'
+  gem 'shoulda-matchers', '~> 5.0'
+  gem 'simplecov', require: false
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
 end
@@ -65,6 +69,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # INFO: Gems Added for Test Project
 group :development, :test do
+  gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-minitest' # or gem 'rubocop-rspec' depending on your test suite
   gem 'rubocop-performance'
@@ -72,7 +77,12 @@ group :development, :test do
 end
 
 gem 'bootstrap', '~> 4.6.1'
+gem 'cloudinary'
 gem 'devise'
+gem 'faker'
 gem 'google-cloud-storage', '~> 1.8', require: false
 gem 'jquery-rails'
 gem 'pundit', '~> 2.2'
+gem 'rack-cors'
+gem 'rails-controller-testing'
+gem 'rubocop-rspec', require: false

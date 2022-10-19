@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module CartsHelper
-
   def update_quantity_link(line_item, quantity_ordered)
     if user_signed_in?
       [line_item, { quantity_ordered: quantity_ordered }]
